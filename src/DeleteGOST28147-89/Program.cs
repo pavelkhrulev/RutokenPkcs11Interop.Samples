@@ -18,9 +18,9 @@ namespace DeleteGOST28147_89
 
         static void Main(string[] args)
         {
-            // Инициализировать библиотеку
             try
             {
+                // Инициализировать библиотеку
                 Console.WriteLine("Library initialization");
                 using (var pkcs11 = new Pkcs11(Settings.RutokenEcpDllDefaultPath, Settings.OsLockingDefault))
                 {

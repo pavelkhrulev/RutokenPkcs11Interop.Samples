@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using Net.Pkcs11Interop.HighLevelAPI;
 
 namespace RutokenPkcs11Interop.Samples.Common
@@ -23,6 +24,25 @@ namespace RutokenPkcs11Interop.Samples.Common
             Slot slot = slots[0];
 
             return slot;
+        }
+
+        public static void PrintByteArray(byte[] array)
+        {
+            var hexString = new StringBuilder();
+            var width = 16;
+            int byteCounter = 1;
+            foreach (var item in array)
+            {
+                hexString.AppendFormat(" 0x{0:x2}", item);
+                if (byteCounter == width)
+                {
+                    hexString.AppendLine();
+                    byteCounter = 0;
+                }
+                byteCounter++;
+            }
+
+            Console.WriteLine(hexString);
         }
     }
 }
