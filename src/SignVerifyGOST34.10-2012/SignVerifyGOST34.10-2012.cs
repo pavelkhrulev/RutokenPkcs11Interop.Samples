@@ -3,23 +3,24 @@ using System.Collections.Generic;
 using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.HighLevelAPI;
 using RutokenPkcs11Interop;
+using RutokenPkcs11Interop.Common;
 using RutokenPkcs11Interop.Samples.Common;
 
-namespace SignVerifyRSA
+namespace SignVerifyGOST3410_2012
 {
-    class SignVerifyRSA
+    class SignVerifyGOST3410_2012
     {
         // Шаблон для поиска открытого ключа для проверки цифровой подписи
         static readonly List<ObjectAttribute> PublicKeyAttributes = new List<ObjectAttribute>()
         {
-            new ObjectAttribute(CKA.CKA_ID, SampleConstants.RsaKeyPairId),
+            new ObjectAttribute(CKA.CKA_ID, SampleConstants.Gost512KeyPairId1),
             new ObjectAttribute(CKA.CKA_CLASS, CKO.CKO_PUBLIC_KEY),
         };
 
         // Шаблон для поиска закрытого ключа для цифровой подписи
         static readonly List<ObjectAttribute> PrivateKeyAttributes = new List<ObjectAttribute>()
         {
-            new ObjectAttribute(CKA.CKA_ID, SampleConstants.RsaKeyPairId),
+            new ObjectAttribute(CKA.CKA_ID, SampleConstants.Gost512KeyPairId1),
             new ObjectAttribute(CKA.CKA_CLASS, CKO.CKO_PRIVATE_KEY)
         };
 
@@ -39,10 +40,10 @@ namespace SignVerifyRSA
                     Console.WriteLine("Checking mechanisms available");
                     List<CKM> mechanisms = slot.GetMechanismList();
                     Errors.Check("No mechanisms available", mechanisms.Count > 0);
-                    bool isRsaSupported = mechanisms.Contains(CKM.CKM_RSA_PKCS);
-                    bool isSha1Supported = mechanisms.Contains(CKM.CKM_SHA_1);
-                    Errors.Check("CKM_RSA_PKCS isn`t supported!", isRsaSupported);
-                    Errors.Check("CKM_SHA_1 isn`t supported!", isSha1Supported);
+                    bool isGostR3410_512Supported = mechanisms.Contains((CKM)Extended_CKM.CKM_GOSTR3410_512);
+                    bool isGostR3411_12_512Supported = mechanisms.Contains((CKM)Extended_CKM.CKM_GOSTR3411_12_512);
+                    Errors.Check("CKM_GOSTR3410_512 isn`t supported!", isGostR3410_512Supported);
+                    Errors.Check("CKM_GOSTR3411_12_512 isn`t supported!", isGostR3411_12_512Supported);
 
                     // Открыть RW сессию в первом доступном слоте
                     Console.WriteLine("Opening RW session");
@@ -61,7 +62,7 @@ namespace SignVerifyRSA
                         Errors.Check("No private keys found", privateKeys.Count > 0);
 
                         // Инициализировать операцию хэширования
-                        var mechanism = new Mechanism(CKM.CKM_SHA_1);
+                        var mechanism = new Mechanism((uint)Extended_CKM.CKM_GOSTR3411_12_512);
 
                         // Вычислить хэш-код данных
                         Console.WriteLine("Hashing data...");
@@ -72,8 +73,8 @@ namespace SignVerifyRSA
                         Helpers.PrintByteArray(hash);
                         Console.WriteLine("Hashing has been completed successfully");
 
-                        // Инициализация операции подписи данных по алгоритму RSA
-                        var signMechanism = new Mechanism(CKM.CKM_RSA_PKCS);
+                        // Инициализация операции подписи данных по алгоритму ГОСТ Р 34.10-2001
+                        var signMechanism = new Mechanism((uint)Extended_CKM.CKM_GOSTR3410_512);
 
                         // Подписать данные
                         Console.WriteLine("Signing data...");
