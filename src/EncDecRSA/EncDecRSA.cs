@@ -1,6 +1,6 @@
-﻿namespace CreateGOST28147_89
+﻿namespace EncDecRSA
 {
-    class Program
+    class EncDecRSA
     {
         static void Main(string[] args)
         {
