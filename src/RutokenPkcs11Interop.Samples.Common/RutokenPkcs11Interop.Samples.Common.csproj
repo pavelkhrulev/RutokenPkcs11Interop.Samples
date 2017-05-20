@@ -34,10 +34,6 @@
       <HintPath>..\packages\Pkcs11Interop.3.3.0\lib\net45\Pkcs11Interop.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="RutokenPkcs11Interop, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Aktiv.RutokenPkcs11Interop.1.1.0\lib\net452\RutokenPkcs11Interop.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />

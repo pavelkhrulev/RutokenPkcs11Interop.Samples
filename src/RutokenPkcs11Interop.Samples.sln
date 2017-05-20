@@ -49,6 +49,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VKO-GOST34.10-2012", "VKO-G
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WaitForSlotEvent", "WaitForSlotEvent\WaitForSlotEvent.csproj", "{7FF76BD9-E643-4B2D-B36A-DDD3B3FD627F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Extended.GeneralPurpose", "Extended.GeneralPurpose\Extended.GeneralPurpose.csproj", "{A28962C9-3A20-4B77-834E-2449A89358AE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -147,6 +149,10 @@ Global
 		{7FF76BD9-E643-4B2D-B36A-DDD3B3FD627F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7FF76BD9-E643-4B2D-B36A-DDD3B3FD627F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7FF76BD9-E643-4B2D-B36A-DDD3B3FD627F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A28962C9-3A20-4B77-834E-2449A89358AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A28962C9-3A20-4B77-834E-2449A89358AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A28962C9-3A20-4B77-834E-2449A89358AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A28962C9-3A20-4B77-834E-2449A89358AE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
