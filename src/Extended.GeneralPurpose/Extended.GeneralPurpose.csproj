@@ -38,7 +38,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="RutokenPkcs11Interop, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Aktiv.RutokenPkcs11Interop.1.1.0-alpha00\lib\net452\RutokenPkcs11Interop.dll</HintPath>
+      <HintPath>..\packages\Aktiv.RutokenPkcs11Interop.1.1.0-alpha01\lib\net452\RutokenPkcs11Interop.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
