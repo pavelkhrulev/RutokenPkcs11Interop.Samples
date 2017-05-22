@@ -117,6 +117,9 @@ namespace Extended.GeneralPurpose
                             case RutokenType.RUTOKEN:
                                 Console.WriteLine("(Rutoken S)");
                                 break;
+                            case RutokenType.PINPAD_FAMILY:
+                                Console.WriteLine("(Rutoken PINPad)");
+                                break;
                             default:
                                 throw new ArgumentOutOfRangeException();
                         }

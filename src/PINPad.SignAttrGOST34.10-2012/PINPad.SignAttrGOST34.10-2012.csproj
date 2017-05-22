@@ -58,6 +58,12 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RutokenPkcs11Interop.Samples.Common\RutokenPkcs11Interop.Samples.Common.csproj">
+      <Project>{03c8c426-55a4-4d09-b356-b8a78e54ed76}</Project>
+      <Name>RutokenPkcs11Interop.Samples.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
