@@ -16,6 +16,12 @@
 
         public static string WrongUserPin = @"00000000";
 
+        public static string LocalPin = @"1234567890";
+
+        public static uint LocalPinId1 = 0x03;
+
+        public static uint LocalPinId2 = 0x1E;
+
         /* DEMO метка Rutoken ("длинная") */
         public static string TokenLongLabel = @"!!!Sample Rutoken Long-long-long-long-long label!!!";
 
