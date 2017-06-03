@@ -27,9 +27,12 @@ namespace PINPad.DeleteGOST3410_2001
 
     class DeleteGOST3410_2001
     {
+        // Шаблон для поиска ключевой пары ГОСТ Р 34.10-2001
         static readonly List<ObjectAttribute> KeyPairAttributes = new List<ObjectAttribute>()
         {
+            // Критерий поиска - идентификатор ключевой пары
             new ObjectAttribute(CKA.CKA_ID, SampleConstants.GostKeyPairId1),
+            // Критерий поиска - ключи ГОСТ Р 34.10-2001
             new ObjectAttribute(CKA.CKA_KEY_TYPE, (uint) Extended_CKK.CKK_GOSTR3410)
         };
 
@@ -53,31 +56,38 @@ namespace PINPad.DeleteGOST3410_2001
                         Console.WriteLine("User authentication");
                         session.Login(CKU.CKU_USER, SampleConstants.NormalUserPin);
 
-                        // Получить массив хэндлов объектов, соответствующих критериям поиска
-                        Console.WriteLine("Getting key pairs...");
-                        var foundObjects = session.FindAllObjects(KeyPairAttributes);
-
-                        // Удалить ключи
-                        if (foundObjects.Count > 0)
+                        try
                         {
-                            Console.WriteLine("Destroying objects...");
-                            int objectsCounter = 1;
-                            foreach (var foundObject in foundObjects)
+                            // Получить массив хэндлов объектов, соответствующих критериям поиска
+                            Console.WriteLine("Getting key pairs...");
+                            var foundObjects = session.FindAllObjects(KeyPairAttributes);
+
+                            // Удалить ключи
+                            if (foundObjects.Count > 0)
                             {
-                                Console.WriteLine($"   Object №{objectsCounter}");
-                                session.DestroyObject(foundObject);
-                                objectsCounter++;
+                                Console.WriteLine("Destroying objects...");
+                                int objectsCounter = 1;
+                                foreach (var foundObject in foundObjects)
+                                {
+                                    Console.WriteLine($"   Object №{objectsCounter}");
+                                    session.DestroyObject(foundObject);
+                                    objectsCounter++;
+                                }
+
+                                Console.WriteLine("Objects have been destroyed successfully");
                             }
-
-                            Console.WriteLine("Objects have been destroyed successfully");
+                            else
+                            {
+                                Console.WriteLine("No objects found");
+                            }
                         }
-                        else
+                        finally
                         {
-                            Console.WriteLine("No objects found");
+                            // Сбросить права доступа как в случае исключения,
+                            // так и в случае успеха.
+                            // Сессия закрывается автоматически.
+                            session.Logout();
                         }
-
-                        // Сбросить права доступа
-                        session.Logout();
                     }
                 }
             }

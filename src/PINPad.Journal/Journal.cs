@@ -35,43 +35,60 @@ namespace PINPad.Journal
     {
         // Шаблон для генерации открытого ключа ГОСТ Р 34.10-2001 для проверки
         // цифровой подписи журнала
-        static readonly List<ObjectAttribute> PublicKeyGenerationAttributes = new List<ObjectAttribute>()
+        static readonly List<ObjectAttribute> PublicKeyGenerationAttributes = new List<ObjectAttribute>
         {
-            new ObjectAttribute(CKA.CKA_CLASS, CKO.CKO_PUBLIC_KEY), // Объект открытого ключа
-            new ObjectAttribute(CKA.CKA_KEY_TYPE, (uint)Extended_CKK.CKK_GOSTR3410), // Тип ключа ГОСТ Р 34.10-2001
-            new ObjectAttribute(CKA.CKA_TOKEN, true),  // Ключ является объектом токена
-            new ObjectAttribute(CKA.CKA_PRIVATE, false), // Ключ доступен без аутентификации
-            new ObjectAttribute((uint)Extended_CKA.CKA_VENDOR_KEY_JOURNAL, true) // Ключ предназначен для проверки цифровой подписи журнала
+            // Объект открытого ключа
+            new ObjectAttribute(CKA.CKA_CLASS, CKO.CKO_PUBLIC_KEY),
+            // Тип ключа ГОСТ Р 34.10-2001
+            new ObjectAttribute(CKA.CKA_KEY_TYPE, (uint)Extended_CKK.CKK_GOSTR3410),
+            // Ключ является объектом токена
+            new ObjectAttribute(CKA.CKA_TOKEN, true),
+            // Ключ доступен без аутентификации
+            new ObjectAttribute(CKA.CKA_PRIVATE, false),
+            // Ключ предназначен для проверки цифровой подписи журнала
+            new ObjectAttribute((uint)Extended_CKA.CKA_VENDOR_KEY_JOURNAL, true)
         };
 
         // Шаблон для генерации закрытого ключа ГОСТ Р 34.10-2001 для цифровой
         // подписи журнала
-        static readonly List<ObjectAttribute> PrivateKeyGenerationAttributes = new List<ObjectAttribute>()
+        static readonly List<ObjectAttribute> PrivateKeyGenerationAttributes = new List<ObjectAttribute>
         {
-            new ObjectAttribute(CKA.CKA_CLASS, CKO.CKO_PRIVATE_KEY), // Объект закрытого ключа
-            new ObjectAttribute(CKA.CKA_KEY_TYPE, (uint)Extended_CKK.CKK_GOSTR3410), // Тип ключа ГОСТ Р 34.10-2001
-            new ObjectAttribute(CKA.CKA_TOKEN, true),  // Ключ является объектом токена
-            new ObjectAttribute(CKA.CKA_PRIVATE, true), // Ключ доступен только после авторизации на токене
-            new ObjectAttribute((uint)Extended_CKA.CKA_VENDOR_KEY_JOURNAL, true), // Ключ предназначен для проверки цифровой подписи журнала
-            new ObjectAttribute((uint)Extended_CKA.CKA_VENDOR_KEY_CONFIRM_OP, true) // Операции с ключом не требуют подтверждения на экране Рутокен PINPad
+            // Объект закрытого ключа
+            new ObjectAttribute(CKA.CKA_CLASS, CKO.CKO_PRIVATE_KEY),
+            // Тип ключа ГОСТ Р 34.10-2001
+            new ObjectAttribute(CKA.CKA_KEY_TYPE, (uint)Extended_CKK.CKK_GOSTR3410),
+            // Ключ является объектом токена
+            new ObjectAttribute(CKA.CKA_TOKEN, true),
+            // Ключ доступен только после авторизации на токене
+            new ObjectAttribute(CKA.CKA_PRIVATE, true),
+            // Ключ предназначен для проверки цифровой подписи журнала
+            new ObjectAttribute((uint)Extended_CKA.CKA_VENDOR_KEY_JOURNAL, true),
+            // Операции с ключом не требуют подтверждения на экране Рутокен PINPad
+            new ObjectAttribute((uint)Extended_CKA.CKA_VENDOR_KEY_CONFIRM_OP, true)
         };
 
         // Шаблон для поиска открытого ключа ГОСТ Р 34.10-2001 для проверки
         // цифровой подписи журнала
-        static readonly List<ObjectAttribute> PublicKeyFindAttributes = new List<ObjectAttribute>()
+        static readonly List<ObjectAttribute> PublicKeyFindAttributes = new List<ObjectAttribute>
         {
-            new ObjectAttribute((uint)Extended_CKA.CKA_VENDOR_KEY_JOURNAL, true), // Ключ предназначен для проверки цифровой подписи журнала
-            new ObjectAttribute(CKA.CKA_CLASS, CKO.CKO_PUBLIC_KEY), // Объект открытого ключа
-            new ObjectAttribute(CKA.CKA_KEY_TYPE, (uint)Extended_CKK.CKK_GOSTR3410) // Тип ключа ГОСТ Р 34.10-2001
+            // Ключ предназначен для проверки цифровой подписи журнала
+            new ObjectAttribute((uint)Extended_CKA.CKA_VENDOR_KEY_JOURNAL, true),
+            // Объект открытого ключа
+            new ObjectAttribute(CKA.CKA_CLASS, CKO.CKO_PUBLIC_KEY),
+            // Тип ключа ГОСТ Р 34.10-2001
+            new ObjectAttribute(CKA.CKA_KEY_TYPE, (uint)Extended_CKK.CKK_GOSTR3410)
         };
 
         // Шаблон для поиска закрытого ключа ГОСТ Р 34.10-2001 для цифровой
         // подписи журнала
-        static readonly List<ObjectAttribute> PrivateKeyFindAttributes = new List<ObjectAttribute>()
+        static readonly List<ObjectAttribute> PrivateKeyFindAttributes = new List<ObjectAttribute>
         {
-            new ObjectAttribute((uint)Extended_CKA.CKA_VENDOR_KEY_JOURNAL, true), // Ключ предназначен для проверки цифровой подписи журнала
-            new ObjectAttribute(CKA.CKA_CLASS, CKO.CKO_PRIVATE_KEY), // Объект закрытого ключа
-            new ObjectAttribute(CKA.CKA_KEY_TYPE, (uint)Extended_CKK.CKK_GOSTR3410) // Тип ключа ГОСТ Р 34.10-2001
+            // Ключ предназначен для проверки цифровой подписи журнала
+            new ObjectAttribute((uint)Extended_CKA.CKA_VENDOR_KEY_JOURNAL, true),
+            // Объект закрытого ключа
+            new ObjectAttribute(CKA.CKA_CLASS, CKO.CKO_PRIVATE_KEY),
+            // Тип ключа ГОСТ Р 34.10-2001
+            new ObjectAttribute(CKA.CKA_KEY_TYPE, (uint)Extended_CKK.CKK_GOSTR3410)
         };
 
         static void Main(string[] args)
@@ -95,13 +112,13 @@ namespace PINPad.Journal
                     // Определение поддерживаемых токеном механизмов
                     Console.WriteLine("Checking mechanisms available");
                     List<CKM> mechanisms = slot.GetMechanismList();
-                    Errors.Check("No mechanisms available", mechanisms.Count > 0);
+                    Errors.Check(" No mechanisms available", mechanisms.Count > 0);
                     bool isGostR3410GenSupported = mechanisms.Contains((CKM)Extended_CKM.CKM_GOSTR3410_KEY_PAIR_GEN);
                     bool isGostR3410Supported = mechanisms.Contains((CKM)Extended_CKM.CKM_GOSTR3410);
                     bool isGostR3411Supported = mechanisms.Contains((CKM)Extended_CKM.CKM_GOSTR3411);
-                    Errors.Check("CKM_GOSTR3410_KEY_PAIR_GEN isn`t supported!", isGostR3410GenSupported);
-                    Errors.Check("CKM_GOSTR3410 isn`t supported!", isGostR3410Supported);
-                    Errors.Check("CKM_GOSTR3411 isn`t supported!", isGostR3411Supported);
+                    Errors.Check(" CKM_GOSTR3410_KEY_PAIR_GEN isn`t supported!", isGostR3410GenSupported);
+                    Errors.Check(" CKM_GOSTR3410 isn`t supported!", isGostR3410Supported);
+                    Errors.Check(" CKM_GOSTR3411 isn`t supported!", isGostR3411Supported);
 
                     // Открыть RW сессию в первом доступном слоте
                     Console.WriteLine("Opening RW session");
@@ -111,79 +128,86 @@ namespace PINPad.Journal
                         Console.WriteLine("User authentication");
                         session.Login(CKU.CKU_USER, SampleConstants.NormalUserPin);
 
-                        // Получить журнал
-                        Console.WriteLine("Acquiring journal...");
-                        byte[] journal = slot.GetJournal();
-                        Errors.Check("Journal is empty!", journal != null);
-                        Errors.Check("Journal is empty!", journal.Length > 0);
-
-                        // Распечатать журнал
-                        Console.WriteLine(" Journal buffer is:");
-                        Helpers.PrintByteArray(journal);
-                        Console.WriteLine("Journal has been acquired successfully");
-
-                        // Получить хэндл закрытого ключа журнальной пары
-                        Console.WriteLine("Getting journal private key...");
-                        List<ObjectHandle> privateKeys = session.FindAllObjects(PrivateKeyFindAttributes);
-
-                        ObjectHandle journalPublicKeyHandle;
-                        ObjectHandle journalPrivateKeyHandle;
-                        if (privateKeys.Count <= 0)
+                        try
                         {
-                            Console.WriteLine(
-                                "No journal private keys found! Journal key pair will be generated");
+                            // Получить журнал
+                            Console.WriteLine("Acquiring journal...");
+                            byte[] journal = slot.GetJournal();
+                            Errors.Check("Journal is empty!", journal != null);
+                            Errors.Check("Journal is empty!", journal.Length > 0);
 
-                            // Генерировать журнальную ключевую пару
-                            var keyGenMechanism = new Mechanism((uint)Extended_CKM.CKM_GOSTR3410_KEY_PAIR_GEN);
+                            // Распечатать журнал
+                            Console.WriteLine(" Journal buffer is:");
+                            Helpers.PrintByteArray(journal);
+                            Console.WriteLine("Journal has been acquired successfully");
 
-                            session.GenerateKeyPair(keyGenMechanism, PublicKeyGenerationAttributes, PrivateKeyGenerationAttributes,
-                                out journalPublicKeyHandle, out journalPrivateKeyHandle);
-                            Errors.Check("Invalid public key handle", journalPublicKeyHandle.ObjectId != CK.CK_INVALID_HANDLE);
-                            Errors.Check("Invalid private key handle", journalPrivateKeyHandle.ObjectId != CK.CK_INVALID_HANDLE);
+                            // Получить хэндл закрытого ключа журнальной пары
+                            Console.WriteLine("Getting journal private key...");
+                            List<ObjectHandle> privateKeys = session.FindAllObjects(PrivateKeyFindAttributes);
+
+                            ObjectHandle journalPublicKeyHandle;
+                            ObjectHandle journalPrivateKeyHandle;
+                            if (privateKeys.Count <= 0)
+                            {
+                                Console.WriteLine(
+                                    "No journal private keys found! Journal key pair will be generated");
+
+                                // Генерировать журнальную ключевую пару
+                                var keyGenMechanism = new Mechanism((uint)Extended_CKM.CKM_GOSTR3410_KEY_PAIR_GEN);
+
+                                session.GenerateKeyPair(keyGenMechanism, PublicKeyGenerationAttributes, PrivateKeyGenerationAttributes,
+                                    out journalPublicKeyHandle, out journalPrivateKeyHandle);
+                                Errors.Check("Invalid public key handle", journalPublicKeyHandle.ObjectId != CK.CK_INVALID_HANDLE);
+                                Errors.Check("Invalid private key handle", journalPrivateKeyHandle.ObjectId != CK.CK_INVALID_HANDLE);
+                            }
+                            else
+                            {
+                                journalPrivateKeyHandle = privateKeys[0];
+                            }
+
+                            // Сформировать хэш-код журнала для цифровой подписи
+                            Console.WriteLine("Hashing journal...");
+                            var digestMechanism = new Mechanism((uint)Extended_CKM.CKM_GOSTR3411);
+                            byte[] journalHash = session.Digest(digestMechanism, journal);
+
+                            // Распечатать буфер, содержащий хэш-код
+                            Console.WriteLine(" Hashed buffer is:");
+                            Helpers.PrintByteArray(journalHash);
+                            Console.WriteLine("Hashing has been completed successfully");
+
+                            // Сформировать цифровую подпись журнала по алгоритму ГОСТ Р 34.10 - 2001
+                            Console.WriteLine("Signing journal...");
+                            var journalSignMechanism = new Mechanism((uint)Extended_CKM.CKM_GOSTR3410);
+                            byte[] journalSignature = session.SignInvisible(journalSignMechanism, journalPrivateKeyHandle, journalHash);
+
+                            // Распечатать буфер, содержащий цифровую подпись журнала
+                            Console.WriteLine(" Sign buffer is:");
+                            Helpers.PrintByteArray(journalSignature);
+                            Console.WriteLine("Signing has been completed");
+
+                            // Получать хэндл открытого ключа журнальной пары
+                            Console.WriteLine("Getting journal public key...");
+                            List<ObjectHandle> publicKeys = session.FindAllObjects(PublicKeyFindAttributes);
+                            Errors.Check("No public keys found", publicKeys.Count > 0);
+                            journalPublicKeyHandle = publicKeys[0];
+
+                            // Выполнить проверку цифровой подписи по алгоритму ГОСТ Р 34.10-2001
+                            Console.WriteLine("Verifying signature...");
+                            bool isSignatureValid = false;
+                            session.Verify(journalSignMechanism, journalPublicKeyHandle, journalHash, journalSignature, out isSignatureValid);
+
+                            if (isSignatureValid)
+                                Console.WriteLine("Verifying has been completed successfully");
+                            else
+                                throw new InvalidOperationException("Invalid signature");
                         }
-                        else
+                        finally
                         {
-                            journalPrivateKeyHandle = privateKeys[0];
+                            // Сбросить права доступа как в случае исключения,
+                            // так и в случае успеха.
+                            // Сессия закрывается автоматически.
+                            session.Logout();
                         }
-
-                        // Сформировать хэш-код журнала для цифровой подписи
-                        Console.WriteLine("Hashing journal...");
-                        var digestMechanism = new Mechanism((uint)Extended_CKM.CKM_GOSTR3411);
-                        byte[] journalHash = session.Digest(digestMechanism, journal);
-
-                        // Распечатать буфер, содержащий хэш-код
-                        Console.WriteLine(" Hashed buffer is:");
-                        Helpers.PrintByteArray(journalHash);
-                        Console.WriteLine("Hashing has been completed successfully");
-
-                        // Сформировать цифровую подпись журнала по алгоритму ГОСТ Р 34.10 - 2001
-                        Console.WriteLine("Signing journal...");
-                        var journalSignMechanism = new Mechanism((uint)Extended_CKM.CKM_GOSTR3410);
-                        byte[] journalSignature = session.SignInvisible(journalSignMechanism, journalPrivateKeyHandle, journalHash);
-
-                        // Распечатать буфер, содержащий цифровую подпись журнала
-                        Console.WriteLine(" Sign buffer is:");
-                        Helpers.PrintByteArray(journalSignature);
-                        Console.WriteLine("Signing has been completed");
-
-                        // Получать хэндл открытого ключа журнальной пары
-                        Console.WriteLine("Getting journal public key...");
-                        List<ObjectHandle> publicKeys = session.FindAllObjects(PublicKeyFindAttributes);
-                        Errors.Check("No public keys found", publicKeys.Count > 0);
-                        journalPublicKeyHandle = publicKeys[0];
-
-                        // Выполнить проверку цифровой подписи по алгоритму ГОСТ Р 34.10-2001
-                        Console.WriteLine("Verifying signature...");
-                        bool isSignatureValid = false;
-                        session.Verify(journalSignMechanism, journalPublicKeyHandle, journalHash, journalSignature, out isSignatureValid);
-
-                        if (isSignatureValid)
-                            Console.WriteLine("Verifying has been completed successfully");
-                        else
-                            throw new InvalidOperationException("Invalid signature");
-
-                        // Сбросить права доступа
-                        session.Logout();
                     }
                 }
             }
