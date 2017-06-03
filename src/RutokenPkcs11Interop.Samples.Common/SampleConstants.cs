@@ -108,24 +108,24 @@
         public static byte[] GostR3411_512_Parameters = { 0x06, 0x08, 0x2a, 0x85, 0x03, 0x07, 0x01, 0x01, 0x02, 0x03 };
 
         /* Размер синхропосылки в байтах */
-        public static int UKM_LENGTH = 8;
+        public static int UkmLength = 8;
 
         /* Размер блока в байтах */
-        public static int GOST_28147_89_BLOCK_SIZE = 8;
+        public static int Gost28147_89_BlockSize = 8;
 
         /* Размер симметричного ключа ГОСТ 28147-89 в байтах */
-        public static int GOST_28147_KEY_SIZE = 32;
+        public static int Gost28147_KeySize = 32;
 
         /* Размер открытого ключа ГОСТ Р 34.10-2001 в байтах */
-        public static int GOST_3410_KEY_SIZE = 64;
+        public static int Gost3410_KeySize = 64;
 
         /* Размер открытого ключа ГОСТ Р 34.10-2012(512) в байтах */
-        public static int GOST_3410_12_512_KEY_SIZE = 128;
+        public static int Gost3410_12_512_KeySize = 128;
 
         /* Максимальное количество попыток ввода PIN-кода для Администратора */
-        public static uint MAX_ADMIN_RETRY_COUNT = 10;
+        public static uint MaxAdminRetryCount = 10;
 
         /* Максимальное количество попыток доступа для Пользователя */
-        public static uint MAX_USER_RETRY_COUNT = 10;
+        public static uint MaxUserRetryCount = 10;
     }
 }

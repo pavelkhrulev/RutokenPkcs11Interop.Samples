@@ -55,7 +55,7 @@ namespace Extended.GeneralPurpose
                     var rutokenInitParam = new RutokenInitParam(SampleConstants.SecurityOfficerPin, SampleConstants.NewUserPin,
                         SampleConstants.TokenStdLabel,
                         new List<RutokenFlag> { RutokenFlag.AdminChangeUserPin, RutokenFlag.UserChangeUserPin }, isRutokenS ? (uint)1 : 6, isRutokenS ? (uint)1 : 6,
-                        SampleConstants.MAX_ADMIN_RETRY_COUNT, SampleConstants.MAX_USER_RETRY_COUNT, smMode: 0);
+                        SampleConstants.MaxAdminRetryCount, SampleConstants.MaxUserRetryCount, smMode: 0);
                     slot.InitTokenExtended(SampleConstants.SecurityOfficerPin, rutokenInitParam);
                     Console.WriteLine("Token has been initialized successfully");
 
@@ -67,7 +67,7 @@ namespace Extended.GeneralPurpose
                         // Пробуем заблокировать PIN-код Пользователя
                         Console.WriteLine(" Locking user PIN...");
                         // Ввод неправильного PIN-кода Пользователя до блокировки PIN-кода
-                        for (var i = 0; i < (SampleConstants.MAX_USER_RETRY_COUNT + 1); i++)
+                        for (var i = 0; i < (SampleConstants.MaxUserRetryCount + 1); i++)
                         {
                             try
                             {

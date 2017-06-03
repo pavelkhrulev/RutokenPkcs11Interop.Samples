@@ -73,13 +73,13 @@ namespace EncDecGOST28147_89_CBC
                             Errors.Check("No keys found", keys.Count > 0);
 
                             // Выполнить дополнение данных по ISO 10126
-                            byte[] dataWithPadding = ISO_10126_Padding.Pad(sourceData, SampleConstants.GOST_28147_89_BLOCK_SIZE);
+                            byte[] dataWithPadding = ISO_10126_Padding.Pad(sourceData, SampleConstants.Gost28147_89_BlockSize);
 
                             // Получить синхропосылку
                             var random = new Random();
-                            byte[] initVector = new byte[SampleConstants.GOST_28147_89_BLOCK_SIZE];
+                            byte[] initVector = new byte[SampleConstants.Gost28147_89_BlockSize];
                             random.NextBytes(initVector);
-                            byte[] round = new byte[SampleConstants.GOST_28147_89_BLOCK_SIZE];
+                            byte[] round = new byte[SampleConstants.Gost28147_89_BlockSize];
                             Buffer.BlockCopy(initVector, 0, round, 0, initVector.Length);
 
                             Console.WriteLine("Encrypting...");
@@ -89,10 +89,10 @@ namespace EncDecGOST28147_89_CBC
                                 // Инициализировать операцию шифрования
                                 var mechanism = new Mechanism((uint)Extended_CKM.CKM_GOST28147_ECB);
 
-                                for (var i = 0; i < dataWithPadding.Length / SampleConstants.GOST_28147_89_BLOCK_SIZE; i++)
+                                for (var i = 0; i < dataWithPadding.Length / SampleConstants.Gost28147_89_BlockSize; i++)
                                 {
-                                    byte[] currentData = new byte[SampleConstants.GOST_28147_89_BLOCK_SIZE];
-                                    Buffer.BlockCopy(dataWithPadding, i * SampleConstants.GOST_28147_89_BLOCK_SIZE,
+                                    byte[] currentData = new byte[SampleConstants.Gost28147_89_BlockSize];
+                                    Buffer.BlockCopy(dataWithPadding, i * SampleConstants.Gost28147_89_BlockSize,
                                         currentData, 0, currentData.Length);
                                     byte[] block = round.Xor(currentData);
 
@@ -114,7 +114,7 @@ namespace EncDecGOST28147_89_CBC
                             // Расшифровать данные
                             Console.WriteLine("Decrypting...");
 
-                            round = new byte[SampleConstants.GOST_28147_89_BLOCK_SIZE];
+                            round = new byte[SampleConstants.Gost28147_89_BlockSize];
                             Buffer.BlockCopy(initVector, 0, round, 0, initVector.Length);
 
                             byte[] decryptedData;
@@ -122,10 +122,10 @@ namespace EncDecGOST28147_89_CBC
                             {
                                 var mechanism = new Mechanism((uint)Extended_CKM.CKM_GOST28147_ECB);
 
-                                for (var i = 0; i < encryptedData.Length / SampleConstants.GOST_28147_89_BLOCK_SIZE; i++)
+                                for (var i = 0; i < encryptedData.Length / SampleConstants.Gost28147_89_BlockSize; i++)
                                 {
-                                    byte[] currentData = new byte[SampleConstants.GOST_28147_89_BLOCK_SIZE];
-                                    Buffer.BlockCopy(encryptedData, i * SampleConstants.GOST_28147_89_BLOCK_SIZE,
+                                    byte[] currentData = new byte[SampleConstants.Gost28147_89_BlockSize];
+                                    Buffer.BlockCopy(encryptedData, i * SampleConstants.Gost28147_89_BlockSize,
                                         currentData, 0, currentData.Length);
 
                                     // Получение расшифрованного блока данных

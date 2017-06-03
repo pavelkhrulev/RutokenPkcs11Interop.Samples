@@ -240,10 +240,10 @@ namespace VKO_GOST3410_2012
                             // Генерация параметра для структуры типа CK_GOSTR3410_DERIVE_PARAMS
                             // для выработки общего ключа
                             Console.WriteLine("Preparing data for deriving and wrapping...");
-                            byte[] ukm = session.GenerateRandom(SampleConstants.UKM_LENGTH);
+                            byte[] ukm = session.GenerateRandom(SampleConstants.UkmLength);
 
                             // Генерация значения сессионного ключа
-                            byte[] sessionKeyValue = session.GenerateRandom(SampleConstants.GOST_28147_KEY_SIZE);
+                            byte[] sessionKeyValue = session.GenerateRandom(SampleConstants.Gost28147_KeySize);
 
                             Console.WriteLine(" Session key data is:");
                             Helpers.PrintByteArray(sessionKeyValue);
