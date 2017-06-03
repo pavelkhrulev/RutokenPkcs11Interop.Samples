@@ -2,24 +2,25 @@
 {
     public static class SampleConstants
     {
-        /// <summary>
-        /// PIN of the SO user a.k.a. PUK.
-        /// </summary>
+        /* DEMO PIN-код Администратора Рутокен */
         public static string SecurityOfficerPin = @"87654321";
 
-        /// <summary>
-        /// PIN of the normal user.
-        /// </summary>
+        /* DEMO PIN-код Пользователя Рутокен */
         public static string NormalUserPin = @"12345678";
 
+        /* Новый DEMO PIN-код Пользователя Рутокен */
         public static string NewUserPin = @"55555555";
 
+        /* Неправильный DEMO PIN-код Пользователя Рутокен */
         public static string WrongUserPin = @"00000000";
 
+        /* DEMO локальный PIN-код Рутокен */
         public static string LocalPin = @"1234567890";
 
+        /* DEMO ID локального PIN-код #1 Рутокен */
         public static uint LocalPinId1 = 0x03;
 
+        /* DEMO ID локального PIN-код #2 Рутокен */
         public static uint LocalPinId2 = 0x1E;
 
         /* DEMO метка Rutoken ("длинная") */
@@ -27,11 +28,6 @@
 
         /* DEMO метка Rutoken ("обычная") */
         public static string TokenStdLabel = @"!!!Sample Rutoken label!!!";
-
-        /// <summary>
-        /// Application name that is used as a label for all objects created by these tests.
-        /// </summary>
-        public static string ApplicationName = @"RutokenPkcs11Interop";
 
         /* DEMO-метка открытого ключа RSA */
         public static string RsaPublicKeyLabel = @"Sample RSA Public Key (Aktiv Co.)";
@@ -48,16 +44,16 @@
         /* DEMO ID симметричного ключа ГОСТ 28147-89 */
         public static string GostSecretKeyId = @"GOST 28147-89 Secret Key ID (Aktiv Co.)";
 
-        /* DEMO-метка  открытого ключа #1 ГОСТ Р 34.10-2001 */
+        /* DEMO-метка открытого ключа #1 ГОСТ Р 34.10-2001 */
         public static string GostPublicKeyLabel1 = @"Sample GOST R 34.10-2001 Public Key 1 (Aktiv Co.)";
 
-        /* DEMO-метка  закрытого ключа #1 ГОСТ Р 34.10-2001 */
+        /* DEMO-метка закрытого ключа #1 ГОСТ Р 34.10-2001 */
         public static string GostPrivateKeyLabel1 = @"Sample GOST R 34.10-2001 Private Key 1 (Aktiv Co.)";
 
-        /* DEMO-метка  открытого ключа #2 ГОСТ Р 34.10-2001 */
+        /* DEMO-метка открытого ключа #2 ГОСТ Р 34.10-2001 */
         public static string GostPublicKeyLabel2 = @"Sample GOST R 34.10-2001 Public Key 2 (Aktiv Co.)";
 
-        /* DEMO-метка  закрытого ключа #2 ГОСТ Р 34.10-2001 */
+        /* DEMO-метка закрытого ключа #2 ГОСТ Р 34.10-2001 */
         public static string GostPrivateKeyLabel2 = @"Sample GOST R 34.10-2001 Private Key 2 (Aktiv Co.)";
 
         /* DEMO ID пары ключей #1 ГОСТ Р 34.10-2001 */
@@ -66,16 +62,16 @@
         /* DEMO ID пары ключей #2 ГОСТ Р 34.10-2001 */
         public static string GostKeyPairId2 = "GOST R 34.10-2001 sample keypair 2 ID (Aktiv Co.)";
 
-        /* DEMO-метка  открытого ключа #1 ГОСТ Р 34.10-2012(512) */
+        /* DEMO-метка открытого ключа #1 ГОСТ Р 34.10-2012(512) */
         public static string Gost512PublicKeyLabel1 = @"Sample GOST R 34.10-2012(512) Public Key 1 (Aktiv Co.)";
 
-        /* DEMO-метка  закрытого ключа #1 ГОСТ Р 34.10-2012(512) */
+        /* DEMO-метка закрытого ключа #1 ГОСТ Р 34.10-2012(512) */
         public static string Gost512PrivateKeyLabel1 = @"Sample GOST R 34.10-2012(512) Private Key 1 (Aktiv Co.)";
 
-        /* DEMO-метка  открытого ключа #2 ГОСТ Р 34.10-2012(512) */
+        /* DEMO-метка открытого ключа #2 ГОСТ Р 34.10-2012(512) */
         public static string Gost512PublicKeyLabel2 = @"Sample GOST R 34.10-2012(512) Public Key 2 (Aktiv Co.)";
 
-        /* DEMO-метка  закрытого ключа #2 ГОСТ Р 34.10-2012(512) */
+        /* DEMO-метка закрытого ключа #2 ГОСТ Р 34.10-2012(512) */
         public static string Gost512PrivateKeyLabel2 = @"Sample GOST R 34.10-2012(512) Private Key 2 (Aktiv Co.)";
 
         /* DEMO ID пары ключей #1 ГОСТ Р 34.10-2012(512) */
