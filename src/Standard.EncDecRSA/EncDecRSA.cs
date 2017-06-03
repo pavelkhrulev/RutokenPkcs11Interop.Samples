@@ -7,22 +7,47 @@ using RutokenPkcs11Interop.Samples.Common;
 
 namespace EncDecRSA
 {
+    /*************************************************************************
+    * Rutoken                                                                *
+    * Copyright (c) 2003-2017, CJSC Aktiv-Soft. All rights reserved.         *
+    * Подробная информация:  http://www.rutoken.ru                           *
+    *------------------------------------------------------------------------*
+    * Пример работы с Рутокен при помощи библиотеки PKCS#11 на языке C#      *
+    *------------------------------------------------------------------------*
+    * Использование команд шифрования/расшифрования на ключе RSA:            *
+    *  - установление соединения с Рутокен в первом доступном слоте;         *
+    *  - выполнение аутентификации Пользователя;                             *
+    *  - шифрование сообщения на демонстрационном ключе RSA;                 *
+    *  - расшифрование зашифрованного сообщения на демонстрационном ключе;   *
+    *  - сброс прав доступа Пользователя на Рутокен и закрытие соединения    *
+    *    с Рутокен.                                                          *
+    *------------------------------------------------------------------------*
+    * Пример использует объекты, созданные в памяти Рутокен примером         *
+    * CreateRSA.                                                             *
+    *************************************************************************/
+
     class EncDecRSA
     {
         // Шаблон для поиска открытого ключа RSA
-        static readonly List<ObjectAttribute> RsaPublicKeyAttributes = new List<ObjectAttribute>()
+        static readonly List<ObjectAttribute> RsaPublicKeyAttributes = new List<ObjectAttribute>
         {
-            new ObjectAttribute(CKA.CKA_CLASS, CKO.CKO_PUBLIC_KEY),
+            // Идентификатор ключа
             new ObjectAttribute(CKA.CKA_ID, SampleConstants.RsaKeyPairId),
-            new ObjectAttribute(CKA.CKA_KEY_TYPE, CKK.CKK_RSA)
+            // Тип ключа - RSA
+            new ObjectAttribute(CKA.CKA_KEY_TYPE, CKK.CKK_RSA),
+            // Класс - открытый ключ
+            new ObjectAttribute(CKA.CKA_CLASS, CKO.CKO_PUBLIC_KEY)
         };
 
         // Шаблон для поиска закрытого ключа RSA
-        static readonly List<ObjectAttribute> RsaPrivateKeyAttributes = new List<ObjectAttribute>()
+        static readonly List<ObjectAttribute> RsaPrivateKeyAttributes = new List<ObjectAttribute>
         {
-            new ObjectAttribute(CKA.CKA_CLASS, CKO.CKO_PRIVATE_KEY),
+            // Идентификатор ключа
             new ObjectAttribute(CKA.CKA_ID, SampleConstants.RsaKeyPairId),
-            new ObjectAttribute(CKA.CKA_KEY_TYPE, CKK.CKK_RSA)
+            // Тип ключа - RSA
+            new ObjectAttribute(CKA.CKA_KEY_TYPE, CKK.CKK_RSA),
+            // Класс - закрытый ключ
+            new ObjectAttribute(CKA.CKA_CLASS, CKO.CKO_PRIVATE_KEY)
         };
 
         static void Main(string[] args)
@@ -45,49 +70,56 @@ namespace EncDecRSA
                         Console.WriteLine("User authentication");
                         session.Login(CKU.CKU_USER, SampleConstants.NormalUserPin);
 
-                        // Получить данные для шифрования
-                        byte[] sourceData = SampleData.Encrypt_RSA_SourceData;
+                        try
+                        {
+                            // Получить данные для шифрования
+                            byte[] sourceData = SampleData.Encrypt_RSA_SourceData;
 
-                        // Получить ключ для шифрования
-                        Console.WriteLine("Getting public key...");
-                        List<ObjectHandle> publicKeys = session.FindAllObjects(RsaPublicKeyAttributes);
-                        Errors.Check("No public keys found", publicKeys.Count > 0);
+                            // Получить ключ для шифрования
+                            Console.WriteLine("Getting public key...");
+                            List<ObjectHandle> publicKeys = session.FindAllObjects(RsaPublicKeyAttributes);
+                            Errors.Check("No public keys found", publicKeys.Count > 0);
 
-                        // Инициализировать операцию шифрования
-                        var mechanism = new Mechanism(CKM.CKM_RSA_PKCS);
+                            // Инициализировать операцию шифрования
+                            var mechanism = new Mechanism(CKM.CKM_RSA_PKCS);
 
-                        // Зашифровать данные
-                        Console.WriteLine("Encrypting...");
-                        byte[] encryptedData = session.Encrypt(mechanism, publicKeys[0], sourceData);
+                            // Зашифровать данные
+                            Console.WriteLine("Encrypting...");
+                            byte[] encryptedData = session.Encrypt(mechanism, publicKeys[0], sourceData);
 
-                        // Распечатать буфер, содержащий зашифрованные данные
-                        Console.WriteLine(" Encrypting buffer is:");
-                        Helpers.PrintByteArray(encryptedData);
-                        Console.WriteLine("Encryption has been completed successfully");
+                            // Распечатать буфер, содержащий зашифрованные данные
+                            Console.WriteLine(" Encrypting buffer is:");
+                            Helpers.PrintByteArray(encryptedData);
+                            Console.WriteLine("Encryption has been completed successfully");
 
-                        // Получить ключ для расшифрования
-                        Console.WriteLine("Getting private key...");
-                        List<ObjectHandle> privateKeys = session.FindAllObjects(RsaPrivateKeyAttributes);
-                        Errors.Check("No private keys found", privateKeys.Count > 0);
+                            // Получить ключ для расшифрования
+                            Console.WriteLine("Getting private key...");
+                            List<ObjectHandle> privateKeys = session.FindAllObjects(RsaPrivateKeyAttributes);
+                            Errors.Check("No private keys found", privateKeys.Count > 0);
 
-                        // Расшифровать данные
-                        Console.WriteLine("Decrypting...");
-                        byte[] decryptedData = session.Decrypt(mechanism, privateKeys[0], encryptedData);
+                            // Расшифровать данные
+                            Console.WriteLine("Decrypting...");
+                            byte[] decryptedData = session.Decrypt(mechanism, privateKeys[0], encryptedData);
 
-                        // Распечатать буфер, содержащий расшифрованные данные
-                        Console.WriteLine(" Decrypted buffer is:");
-                        Helpers.PrintByteArray(decryptedData);
-                        Console.WriteLine("Decryption has been completed successfully");
+                            // Распечатать буфер, содержащий расшифрованные данные
+                            Console.WriteLine(" Decrypted buffer is:");
+                            Helpers.PrintByteArray(decryptedData);
+                            Console.WriteLine("Decryption has been completed successfully");
 
-                        // Сравнить исходные данные с расшифрованными
-                        bool encryptionState = (Convert.ToBase64String(sourceData) ==
-                                                Convert.ToBase64String(decryptedData));
-                        Errors.Check("Source data and decrypted data are not equal", encryptionState);
+                            // Сравнить исходные данные с расшифрованными
+                            bool encryptionState = (Convert.ToBase64String(sourceData) ==
+                                                    Convert.ToBase64String(decryptedData));
+                            Errors.Check("Source data and decrypted data are not equal", encryptionState);
 
-                        Console.WriteLine("Source data and decrypted data are equal");
-
-                        // Сбросить права доступа
-                        session.Logout();
+                            Console.WriteLine("Source data and decrypted data are equal");
+                        }
+                        finally
+                        {
+                            // Сбросить права доступа как в случае исключения,
+                            // так и в случае успеха.
+                            // Сессия закрывается автоматически.
+                            session.Logout();
+                        }
                     }
                 }
             }

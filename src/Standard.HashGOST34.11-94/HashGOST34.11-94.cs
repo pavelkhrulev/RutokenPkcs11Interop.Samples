@@ -8,6 +8,22 @@ using RutokenPkcs11Interop.Samples.Common;
 
 namespace HashGOST3411_94
 {
+    /*************************************************************************
+    * Rutoken                                                                *
+    * Copyright (c) 2003-2017, CJSC Aktiv-Soft. All rights reserved.         *
+    * Подробная информация:  http://www.rutoken.ru                           *
+    *------------------------------------------------------------------------*
+    * Пример работы с Рутокен при помощи библиотеки PKCS#11 на языке C#      *
+    *------------------------------------------------------------------------*
+    * Использование команд вычисления хэш-кода:                              *
+    *  - установление соединения с Рутокен в первом доступном слоте;         *
+    *  - определение типа подключенного токена;                              *
+    *  - вычисление хэш-кода ГОСТ Р 34.11-94;                                *
+    *  - закрытие соединения с Рутокен.                                      *
+    *------------------------------------------------------------------------*
+    * Данный пример является самодостаточным.                                *
+    *************************************************************************/
+
     class HashGOST3411_94
     {
         static void Main(string[] args)
@@ -25,9 +41,9 @@ namespace HashGOST3411_94
                     // Определение поддерживаемых токеном механизмов
                     Console.WriteLine("Checking mechanisms available");
                     List<CKM> mechanisms = slot.GetMechanismList();
-                    Errors.Check("No mechanisms available", mechanisms.Count > 0);
-                    bool isGostR3411Supported = mechanisms.Contains((CKM)Extended_CKM.CKM_GOSTR3411);
-                    Errors.Check("CKM_GOSTR3411 isn`t supported!", isGostR3411Supported);
+                    Errors.Check(" No mechanisms available", mechanisms.Count > 0);
+                    bool isGostR3411Supported = mechanisms.Contains((CKM) Extended_CKM.CKM_GOSTR3411);
+                    Errors.Check(" CKM_GOSTR3411 isn`t supported!", isGostR3411Supported);
 
                     // Открыть RW сессию в первом доступном слоте
                     Console.WriteLine("Opening RW session");
@@ -37,23 +53,30 @@ namespace HashGOST3411_94
                         Console.WriteLine("User authentication");
                         session.Login(CKU.CKU_USER, SampleConstants.NormalUserPin);
 
-                        // Получить данные для хэширования
-                        byte[] sourceData = SampleData.Digest_Gost3411_SourceData;
+                        try
+                        {
+                            // Получить данные для хэширования
+                            byte[] sourceData = SampleData.Digest_Gost3411_SourceData;
 
-                        // Инициализировать операцию хэширования
-                        var mechanism = new Mechanism((uint)Extended_CKM.CKM_GOSTR3411);
+                            // Инициализировать операцию хэширования
+                            var mechanism = new Mechanism((uint)Extended_CKM.CKM_GOSTR3411);
 
-                        // Вычислить хэш-код данных
-                        Console.WriteLine("Hashing data...");
-                        byte[] hash = session.Digest(mechanism, sourceData);
+                            // Вычислить хэш-код данных
+                            Console.WriteLine("Hashing data...");
+                            byte[] hash = session.Digest(mechanism, sourceData);
 
-                        // Распечатать буфер, содержащий хэш-код
-                        Console.WriteLine(" Hashed buffer is:");
-                        Helpers.PrintByteArray(hash);
-                        Console.WriteLine("Hashing has been completed successfully");
-
-                        // Сбросить права доступа
-                        session.Logout();
+                            // Распечатать буфер, содержащий хэш-код
+                            Console.WriteLine(" Hashed buffer is:");
+                            Helpers.PrintByteArray(hash);
+                            Console.WriteLine("Hashing has been completed successfully");
+                        }
+                        finally
+                        {
+                            // Сбросить права доступа как в случае исключения,
+                            // так и в случае успеха.
+                            // Сессия закрывается автоматически.
+                            session.Logout();
+                        }
                     }
                 }
             }

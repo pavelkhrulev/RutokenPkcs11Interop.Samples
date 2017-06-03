@@ -6,6 +6,23 @@ using RutokenPkcs11Interop.Samples.Common;
 
 namespace InitToken
 {
+    /*************************************************************************
+    * Rutoken                                                                *
+    * Copyright (c) 2003-2017, CJSC Aktiv-Soft. All rights reserved.         *
+    * Подробная информация:  http://www.rutoken.ru                           *
+    *------------------------------------------------------------------------*
+    * Пример работы с Рутокен при помощи библиотеки PKCS#11 на языке C#      *
+    *------------------------------------------------------------------------*
+    * Использование команд инициализации Рутокен:                            *
+    *  - установление соединения с Рутокен в первом доступном слоте;         *
+    *  - инициализация токена;                                               *
+    *  - выполнение аутентификации Администратора;                           *
+    *  - инициализация PIN-кода Пользователя;                                *
+    *  - сброс прав доступа Администратора и закрытие соединения с Рутокен.  *
+    *------------------------------------------------------------------------*
+    * Данный пример является самодостаточным.                                *
+    *************************************************************************/
+
     class InitToken
     {
         static void Main(string[] args)
@@ -32,12 +49,22 @@ namespace InitToken
                         Console.WriteLine("SO authentication");
                         session.Login(CKU.CKU_SO, SampleConstants.SecurityOfficerPin);
 
-                        // Инициализировать PIN-код Пользователя
-                        Console.WriteLine("User PIN initialization");
-                        session.InitPin(SampleConstants.NormalUserPin);
-                    }
+                        try
+                        {
+                            // Инициализировать PIN-код Пользователя
+                            Console.WriteLine("User PIN initialization");
+                            session.InitPin(SampleConstants.NormalUserPin);
 
-                    Console.WriteLine("Initialization successfully completed");
+                            Console.WriteLine("Initialization has been completed successfully");
+                        }
+                        finally
+                        {
+                            // Сбросить права доступа как в случае исключения,
+                            // так и в случае успеха.
+                            // Сессия закрывается автоматически.
+                            session.Logout();
+                        }
+                    }
                 }
             }
             catch (Pkcs11Exception ex)

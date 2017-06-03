@@ -6,7 +6,7 @@ using RutokenPkcs11Interop;
 using RutokenPkcs11Interop.Common;
 using RutokenPkcs11Interop.Samples.Common;
 
-namespace HashGOST3411_2012
+namespace DeleteGOST28147_89
 {
     /*************************************************************************
     * Rutoken                                                                *
@@ -15,17 +15,27 @@ namespace HashGOST3411_2012
     *------------------------------------------------------------------------*
     * Пример работы с Рутокен при помощи библиотеки PKCS#11 на языке C#      *
     *------------------------------------------------------------------------*
-    * Использование команд вычисления хэш-кода:                              *
+    * Использование команды удаления объектов PKCS#11:                       *
     *  - установление соединения с Рутокен в первом доступном слоте;         *
-    *  - определение типа подключенного токена;                              *
-    *  - вычисление хэш-кода ГОСТ Р 34.11-2012;                              *
-    *  - закрытие соединения с Рутокен.                                      *
+    *  - выполнение аутентификации Пользователя;                             *
+    *  - удаление ключей ГОСТ 28147-89;                                      *
+    *  - сброс прав доступа Пользователя на Рутокен и закрытие соединения    *
+    *    с Рутокен.                                                          *
     *------------------------------------------------------------------------*
-    * Данный пример является самодостаточным.                                *
+    * Пример удаляет все ключи, созданные в CreateGOST28147-89.              *
     *************************************************************************/
 
-    class HashGOST3411_2012
+    class DeleteGOST28147_89
     {
+        // Шаблон для поиска симметричного ключа ГОСТ 28147-89
+        static readonly List<ObjectAttribute> SymmetricKeyAttributes = new List<ObjectAttribute>
+        {
+            // Идентификатор ключа
+            new ObjectAttribute(CKA.CKA_ID, SampleConstants.GostSecretKeyId),
+            // Тип ключа - ГОСТ 28147-89
+            new ObjectAttribute(CKA.CKA_KEY_TYPE, (uint) Extended_CKK.CKK_GOST28147)
+        };
+
         static void Main(string[] args)
         {
             try
@@ -38,13 +48,6 @@ namespace HashGOST3411_2012
                     Console.WriteLine("Checking tokens available");
                     Slot slot = Helpers.GetUsableSlot(pkcs11);
 
-                    // Определение поддерживаемых токеном механизмов
-                    Console.WriteLine("Checking mechanisms available");
-                    List<CKM> mechanisms = slot.GetMechanismList();
-                    Errors.Check(" No mechanisms available", mechanisms.Count > 0);
-                    bool isGostR3411_12_256Supported = mechanisms.Contains((CKM) Extended_CKM.CKM_GOSTR3411_12_256);
-                    Errors.Check(" CKM_GOSTR3411_12_256 isn`t supported!", isGostR3411_12_256Supported);
-
                     // Открыть RW сессию в первом доступном слоте
                     Console.WriteLine("Opening RW session");
                     using (Session session = slot.OpenSession(false))
@@ -55,20 +58,28 @@ namespace HashGOST3411_2012
 
                         try
                         {
-                            // Получить данные для хэширования
-                            byte[] sourceData = SampleData.Digest_Gost3411_SourceData;
+                            // Получить массив хэндлов объектов, соответствующих критериям поиска
+                            Console.WriteLine("Getting secret keys...");
+                            List<ObjectHandle> foundObjects = session.FindAllObjects(SymmetricKeyAttributes);
 
-                            // Инициализировать операцию хэширования
-                            var mechanism = new Mechanism((uint)Extended_CKM.CKM_GOSTR3411_12_256);
+                            // Удалить ключи
+                            if (foundObjects.Count > 0)
+                            {
+                                Console.WriteLine("Destroying objects...");
+                                int objectsCounter = 1;
+                                foreach (var foundObject in foundObjects)
+                                {
+                                    Console.WriteLine($"   Object №{objectsCounter}");
+                                    session.DestroyObject(foundObject);
+                                    objectsCounter++;
+                                }
 
-                            // Вычислить хэш-код данных
-                            Console.WriteLine("Hashing data...");
-                            byte[] hash = session.Digest(mechanism, sourceData);
-
-                            // Распечатать буфер, содержащий хэш-код
-                            Console.WriteLine(" Hashed buffer is:");
-                            Helpers.PrintByteArray(hash);
-                            Console.WriteLine("Hashing has been completed successfully");
+                                Console.WriteLine("Objects have been destroyed successfully");
+                            }
+                            else
+                            {
+                                Console.WriteLine("No objects found");
+                            }
                         }
                         finally
                         {

@@ -7,11 +7,32 @@ using RutokenPkcs11Interop.Samples.Common;
 
 namespace DeleteRSA
 {
+    /*************************************************************************
+    * Rutoken                                                                *
+    * Copyright (c) 2003-2017, CJSC Aktiv-Soft. All rights reserved.         *
+    * Подробная информация:  http://www.rutoken.ru                           *
+    *------------------------------------------------------------------------*
+    * Пример работы с Рутокен при помощи библиотеки PKCS#11 на языке C#      *
+    *------------------------------------------------------------------------*
+    * Использование команды удаления объектов PKCS#11:                       *
+    *  - установление соединения с Рутокен в первом доступном слоте;         *
+    *  - выполнение аутентификации Пользователя;                             *
+    *  - удаление ключей RSA;                                                *
+    *  - сброс прав доступа Пользователя на Рутокен и закрытие соединения    *
+    *    с Рутокен.                                                          *
+    *------------------------------------------------------------------------*
+    * Пример удаляет все ключевые пары, созданные в CreateRSA.               *
+    *************************************************************************/
+
     class DeleteRSA
     {
-        static readonly List<ObjectAttribute> KeyPairAttributes = new List<ObjectAttribute>()
+        // Шаблон для поиска ключевой пары RSA
+        // (Ключевая пара для подписи и шифрования)
+        static readonly List<ObjectAttribute> KeyPairAttributes = new List<ObjectAttribute>
         {
+            // Идентификатор ключевой пары
             new ObjectAttribute(CKA.CKA_ID, SampleConstants.RsaKeyPairId),
+            // Тип ключа - RSA
             new ObjectAttribute(CKA.CKA_KEY_TYPE, CKK.CKK_RSA)
         };
 
@@ -35,31 +56,38 @@ namespace DeleteRSA
                         Console.WriteLine("User authentication");
                         session.Login(CKU.CKU_USER, SampleConstants.NormalUserPin);
 
-                        // Получить массив хэндлов объектов, соответствующих критериям поиска
-                        Console.WriteLine("Getting RSA key pair...");
-                        List<ObjectHandle> foundObjects = session.FindAllObjects(KeyPairAttributes);
-
-                        // Удалить ключи
-                        if (foundObjects.Count > 0)
+                        try
                         {
-                            Console.WriteLine("Destroying objects...");
-                            int objectsCounter = 1;
-                            foreach (var foundObject in foundObjects)
+                            // Получить массив хэндлов объектов, соответствующих критериям поиска
+                            Console.WriteLine("Getting RSA key pair...");
+                            List<ObjectHandle> foundObjects = session.FindAllObjects(KeyPairAttributes);
+
+                            // Удалить ключи
+                            if (foundObjects.Count > 0)
                             {
-                                Console.WriteLine($"   Object №{objectsCounter}");
-                                session.DestroyObject(foundObject);
-                                objectsCounter++;
+                                Console.WriteLine("Destroying objects...");
+                                int objectsCounter = 1;
+                                foreach (var foundObject in foundObjects)
+                                {
+                                    Console.WriteLine($"   Object №{objectsCounter}");
+                                    session.DestroyObject(foundObject);
+                                    objectsCounter++;
+                                }
+
+                                Console.WriteLine("Objects have been destroyed successfully");
                             }
-
-                            Console.WriteLine("Objects have been destroyed successfully");
+                            else
+                            {
+                                Console.WriteLine("No objects found");
+                            }
                         }
-                        else
+                        finally
                         {
-                            Console.WriteLine("No objects found");
+                            // Сбросить права доступа как в случае исключения,
+                            // так и в случае успеха.
+                            // Сессия закрывается автоматически.
+                            session.Logout();
                         }
-
-                        // Сбросить права доступа
-                        session.Logout();
                     }
                 }
             }

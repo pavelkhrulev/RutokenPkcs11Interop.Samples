@@ -6,7 +6,7 @@ using RutokenPkcs11Interop;
 using RutokenPkcs11Interop.Common;
 using RutokenPkcs11Interop.Samples.Common;
 
-namespace HashGOST3411_2012
+namespace CreateGOST28147_89
 {
     /*************************************************************************
     * Rutoken                                                                *
@@ -15,17 +15,43 @@ namespace HashGOST3411_2012
     *------------------------------------------------------------------------*
     * Пример работы с Рутокен при помощи библиотеки PKCS#11 на языке C#      *
     *------------------------------------------------------------------------*
-    * Использование команд вычисления хэш-кода:                              *
+    * Использование команд создания объектов в памяти Рутокен:               *
     *  - установление соединения с Рутокен в первом доступном слоте;         *
     *  - определение типа подключенного токена;                              *
-    *  - вычисление хэш-кода ГОСТ Р 34.11-2012;                              *
-    *  - закрытие соединения с Рутокен.                                      *
+    *  - выполнение аутентификации Пользователя;                             *
+    *  - генерация симметричного ключа ГОСТ 28147-89;                        *
+    *  - сброс прав доступа Пользователя на Рутокен и закрытие соединения    *
+    *    с Рутокен.                                                          *
     *------------------------------------------------------------------------*
-    * Данный пример является самодостаточным.                                *
+    * Созданные примером объекты используются также и в других примерах      *
+    * работы с библиотекой PKCS#11.                                          *
     *************************************************************************/
 
-    class HashGOST3411_2012
+    class CreateGOST28147_89
     {
+        // Шаблон для создания симметричного ключа ГОСТ 28147-89
+        static readonly List<ObjectAttribute> SymmetricKeyAttributes = new List<ObjectAttribute>
+        {
+            // Класс - секретный ключ
+            new ObjectAttribute(CKA.CKA_CLASS, CKO.CKO_SECRET_KEY),
+            // Метка ключа
+            new ObjectAttribute(CKA.CKA_LABEL, SampleConstants.GostSecretKeyId),
+            // Идентификатор ключа
+            new ObjectAttribute(CKA.CKA_ID, SampleConstants.GostSecretKeyId),
+            // Тип ключа - ГОСТ 28147-89
+            new ObjectAttribute(CKA.CKA_KEY_TYPE, (uint) Extended_CKK.CKK_GOST28147),
+            // Ключ предназначен для зашифрования
+            new ObjectAttribute(CKA.CKA_ENCRYPT, true),
+            // Ключ предназначен для расшифрования
+            new ObjectAttribute(CKA.CKA_DECRYPT, true),
+            // Ключ является объектом токена
+            new ObjectAttribute(CKA.CKA_TOKEN, true),
+            // Ключ недоступен без аутентификации на токене
+            new ObjectAttribute(CKA.CKA_PRIVATE, true),
+            // Параметры алгоритма из стандарта
+            new ObjectAttribute((uint) Extended_CKA.CKA_GOST28147_PARAMS, SampleConstants.Gost28147Parameters)
+        };
+
         static void Main(string[] args)
         {
             try
@@ -42,8 +68,8 @@ namespace HashGOST3411_2012
                     Console.WriteLine("Checking mechanisms available");
                     List<CKM> mechanisms = slot.GetMechanismList();
                     Errors.Check(" No mechanisms available", mechanisms.Count > 0);
-                    bool isGostR3411_12_256Supported = mechanisms.Contains((CKM) Extended_CKM.CKM_GOSTR3411_12_256);
-                    Errors.Check(" CKM_GOSTR3411_12_256 isn`t supported!", isGostR3411_12_256Supported);
+                    bool isGost28147_89Supported = mechanisms.Contains((CKM) Extended_CKM.CKM_GOST28147_KEY_GEN);
+                    Errors.Check(" CKM_GOST28147_KEY_GEN isn`t supported!", isGost28147_89Supported);
 
                     // Открыть RW сессию в первом доступном слоте
                     Console.WriteLine("Opening RW session");
@@ -55,20 +81,14 @@ namespace HashGOST3411_2012
 
                         try
                         {
-                            // Получить данные для хэширования
-                            byte[] sourceData = SampleData.Digest_Gost3411_SourceData;
+                            // Определить механизм генерации ключа
+                            Console.WriteLine("Generating GOST 28147-89 secret key...");
+                            var mechanism = new Mechanism((uint)Extended_CKM.CKM_GOST28147_KEY_GEN);
 
-                            // Инициализировать операцию хэширования
-                            var mechanism = new Mechanism((uint)Extended_CKM.CKM_GOSTR3411_12_256);
-
-                            // Вычислить хэш-код данных
-                            Console.WriteLine("Hashing data...");
-                            byte[] hash = session.Digest(mechanism, sourceData);
-
-                            // Распечатать буфер, содержащий хэш-код
-                            Console.WriteLine(" Hashed buffer is:");
-                            Helpers.PrintByteArray(hash);
-                            Console.WriteLine("Hashing has been completed successfully");
+                            // Сгенерировать секретный ключ ГОСТ 28147-89
+                            ObjectHandle symmetricKey = session.GenerateKey(mechanism, SymmetricKeyAttributes);
+                            Errors.Check("Invalid key handle", symmetricKey.ObjectId != CK.CK_INVALID_HANDLE);
+                            Console.WriteLine("Generating has been completed successfully");
                         }
                         finally
                         {
