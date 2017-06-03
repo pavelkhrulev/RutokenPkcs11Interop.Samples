@@ -98,11 +98,16 @@ namespace Extended.GeneralPurpose
                         // Выполнить аутентификацию администратора
                         session.Login(CKU.CKU_SO, SampleConstants.SecurityOfficerPin);
 
-                        // Разблокировать PIN-код Пользователя
-                        session.UnblockUserPIN();
-
-                        // Завершение сессии администратора
-                        session.Logout();
+                        try
+                        {
+                            // Разблокировать PIN-код Пользователя
+                            session.UnblockUserPIN();
+                        }
+                        finally
+                        {
+                            // Завершение сессии администратора
+                            session.Logout();
+                        }
 
                         Console.WriteLine("Extended PIN function test has been completed successfully");
 
@@ -111,64 +116,72 @@ namespace Extended.GeneralPurpose
                         // Аутентификация пользователя
                         session.Login(CKU.CKU_USER, SampleConstants.NewUserPin);
 
-                        //Изменить метку токена на "длинную"
-                        Console.WriteLine($" Set long token name: {SampleConstants.TokenLongLabel}");
-                        session.SetTokenName(SampleConstants.TokenLongLabel);
-
-                        // Получение метки токена
-                        string tokenLabel = session.GetTokenLabel();
-                        Console.WriteLine(" Reading token name...");
-                        Console.WriteLine($" Token name: {tokenLabel}");
-
-                        Console.WriteLine("Work with token name has been completed successfully");
-
-                        // Вывести расширенную информацию о токене
-                        Console.WriteLine("Extended information:");
-                        Console.Write(" Token type: ");
-                        switch (tokenInfo.TokenType)
+                        try
                         {
-                            case RutokenType.ECP:
-                                Console.WriteLine("(Rutoken ECP)");
-                                break;
-                            case RutokenType.LITE:
-                                Console.WriteLine("(Rutoken Lite)");
-                                break;
-                            case RutokenType.RUTOKEN:
-                                Console.WriteLine("(Rutoken S)");
-                                break;
-                            case RutokenType.PINPAD_FAMILY:
-                                Console.WriteLine("(Rutoken PINPad)");
-                                break;
-                            default:
-                                throw new ArgumentOutOfRangeException();
+                            //Изменить метку токена на "длинную"
+                            Console.WriteLine($" Set long token name: {SampleConstants.TokenLongLabel}");
+                            session.SetTokenName(SampleConstants.TokenLongLabel);
+
+                            // Получение метки токена
+                            string tokenLabel = session.GetTokenLabel();
+                            Console.WriteLine(" Reading token name...");
+                            Console.WriteLine($" Token name: {tokenLabel}");
+
+                            Console.WriteLine("Work with token name has been completed successfully");
+
+                            // Вывести расширенную информацию о токене
+                            Console.WriteLine("Extended information:");
+                            Console.Write(" Token type: ");
+                            switch (tokenInfo.TokenType)
+                            {
+                                case RutokenType.ECP:
+                                    Console.WriteLine("(Rutoken ECP)");
+                                    break;
+                                case RutokenType.LITE:
+                                    Console.WriteLine("(Rutoken Lite)");
+                                    break;
+                                case RutokenType.RUTOKEN:
+                                    Console.WriteLine("(Rutoken S)");
+                                    break;
+                                case RutokenType.PINPAD_FAMILY:
+                                    Console.WriteLine("(Rutoken PINPad)");
+                                    break;
+                                default:
+                                    throw new ArgumentOutOfRangeException();
+                            }
+                            Console.WriteLine(" Protocol number: 0x{0:X}", tokenInfo.ProtocolNumber);
+                            Console.WriteLine(" Microcode number: 0x{0:X}", tokenInfo.MicrocodeNumber);
+                            Console.WriteLine(" Order number: 0x{0:X}", tokenInfo.OrderNumber);
+                            Console.WriteLine(" Flags: 0x{0:X}", tokenInfo.Flags);
+                            Console.WriteLine(" Max admin PIN length: 0x{0:X}", tokenInfo.MaxAdminPinLen);
+                            Console.WriteLine(" Min admin PIN length: 0x{0:X}", tokenInfo.MinAdminPinLen);
+                            Console.WriteLine(" Max user PIN length: 0x{0:X}", tokenInfo.MaxUserPinLen);
+                            Console.WriteLine(" Min user PIN length: 0x{0:X}", tokenInfo.MinUserPinLen);
+                            Console.WriteLine(" Max admin retry counter: 0x{0:X}", tokenInfo.MaxAdminRetryCount);
+                            Console.WriteLine(" Admin retry counter: 0x{0:X}", tokenInfo.AdminRetryCountLeft);
+                            Console.WriteLine(" Max user retry counter: 0x{0:X}", tokenInfo.MaxUserRetryCount);
+                            Console.WriteLine(" User retry counter: 0x{0:X}", tokenInfo.UserRetryCountLeft);
+                            Console.WriteLine(" Serial number: {0}", tokenInfo.SerialNumber);
+                            Console.WriteLine(" Total memory: 0x{0:X}", tokenInfo.TotalMemory);
+                            Console.WriteLine(" Free memory: 0x{0:X}", tokenInfo.FreeMemory);
+                            Console.WriteLine(" ATR: {0}", tokenInfo.ATR);
+                            Console.WriteLine(" Token class: {0}", tokenInfo.TokenClass);
+                            Console.WriteLine(" Battery voltage (Bluetooth): 0x{0:X}", tokenInfo.BatteryVoltage);
+                            Console.WriteLine(" BodyColor (Bluetooth): {0}", tokenInfo.BodyColor);
+                            Console.WriteLine(" Firmware checksum:  0x{0:X}", tokenInfo.FirmwareChecksum);
+
+                            Console.WriteLine("Extended info test has been completed successfully");
+
+                            // Установить PIN-код Пользователя по умолчанию
+                            Console.WriteLine("Changing user PIN to default...");
+                            session.SetPin(SampleConstants.NewUserPin, SampleConstants.NormalUserPin);
+                            Console.WriteLine("User PIN has been changed to default successfully");
                         }
-                        Console.WriteLine(" Protocol number: 0x{0:X}", tokenInfo.ProtocolNumber);
-                        Console.WriteLine(" Microcode number: 0x{0:X}", tokenInfo.MicrocodeNumber);
-                        Console.WriteLine(" Order number: 0x{0:X}", tokenInfo.OrderNumber);
-                        Console.WriteLine(" Flags: 0x{0:X}", tokenInfo.Flags);
-                        Console.WriteLine(" Max admin PIN length: 0x{0:X}", tokenInfo.MaxAdminPinLen);
-                        Console.WriteLine(" Min admin PIN length: 0x{0:X}", tokenInfo.MinAdminPinLen);
-                        Console.WriteLine(" Max user PIN length: 0x{0:X}", tokenInfo.MaxUserPinLen);
-                        Console.WriteLine(" Min user PIN length: 0x{0:X}", tokenInfo.MinUserPinLen);
-                        Console.WriteLine(" Max admin retry counter: 0x{0:X}", tokenInfo.MaxAdminRetryCount);
-                        Console.WriteLine(" Admin retry counter: 0x{0:X}", tokenInfo.AdminRetryCountLeft);
-                        Console.WriteLine(" Max user retry counter: 0x{0:X}", tokenInfo.MaxUserRetryCount);
-                        Console.WriteLine(" User retry counter: 0x{0:X}", tokenInfo.UserRetryCountLeft);
-                        Console.WriteLine(" Serial number: {0}", tokenInfo.SerialNumber);
-                        Console.WriteLine(" Total memory: 0x{0:X}", tokenInfo.TotalMemory);
-                        Console.WriteLine(" Free memory: 0x{0:X}", tokenInfo.FreeMemory);
-                        Console.WriteLine(" ATR: {0}", tokenInfo.ATR);
-                        Console.WriteLine(" Token class: {0}", tokenInfo.TokenClass);
-                        Console.WriteLine(" Battery voltage (Bluetooth): 0x{0:X}", tokenInfo.BatteryVoltage);
-                        Console.WriteLine(" BodyColor (Bluetooth): {0}", tokenInfo.BodyColor);
-                        Console.WriteLine(" Firmware checksum:  0x{0:X}", tokenInfo.FirmwareChecksum);
-
-                        Console.WriteLine("Extended info test has been completed successfully");
-
-                        // Установить PIN-код Пользователя по умолчанию
-                        Console.WriteLine("Changing user PIN to default...");
-                        session.SetPin(SampleConstants.NewUserPin, SampleConstants.NormalUserPin);
-                        Console.WriteLine("User PIN has been changed to default successfully");
+                        finally
+                        {
+                            // Завершение сессии пользователя
+                            session.Logout();
+                        }
                     }
                 }
             }

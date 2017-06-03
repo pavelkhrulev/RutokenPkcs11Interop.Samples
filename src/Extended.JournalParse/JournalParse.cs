@@ -23,6 +23,7 @@
     {
         static void Main(string[] args)
         {
+            // TODO: realize journal parse
         }
     }
 }
