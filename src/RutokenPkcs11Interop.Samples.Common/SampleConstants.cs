@@ -110,6 +110,9 @@
         /* Размер синхропосылки в байтах */
         public static int UKM_LENGTH = 8;
 
+        /* Размер блока в байтах */
+        public static int GOST_28147_89_BLOCK_SIZE = 8;
+
         /* Размер симметричного ключа ГОСТ 28147-89 в байтах */
         public static int GOST_28147_KEY_SIZE = 32;
 

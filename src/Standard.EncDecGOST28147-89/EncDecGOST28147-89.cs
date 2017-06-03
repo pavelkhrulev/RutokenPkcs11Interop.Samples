@@ -30,7 +30,7 @@ namespace EncDecGOST28147_89
     class EncDecGOST28147_89
     {
         // Шаблон для поиска симметричного ключа ГОСТ 28147-89
-        static readonly List<ObjectAttribute> SymmetricKeyAttributes = new List<ObjectAttribute>()
+        static readonly List<ObjectAttribute> SymmetricKeyAttributes = new List<ObjectAttribute>
         {
             // Идентификатор ключа
             new ObjectAttribute(CKA.CKA_CLASS, CKO.CKO_SECRET_KEY),
