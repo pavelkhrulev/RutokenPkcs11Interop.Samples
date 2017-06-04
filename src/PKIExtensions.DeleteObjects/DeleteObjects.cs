@@ -45,7 +45,7 @@ namespace PKIExtensions.DeleteObjects
         static readonly List<ObjectAttribute> PrivateKeyAttributes = new List<ObjectAttribute>
         {
             // Объект закрытого ключа
-            new ObjectAttribute(CKA.CKA_CLASS, CKO.CKO_PUBLIC_KEY),
+            new ObjectAttribute(CKA.CKA_CLASS, CKO.CKO_PRIVATE_KEY),
             // Закрытый ключ является объектом токена
             new ObjectAttribute(CKA.CKA_TOKEN, true),
             // Идентификатор искомой пары
