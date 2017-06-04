@@ -127,5 +127,12 @@
 
         /* Максимальное количество попыток доступа для Пользователя */
         public static uint MaxUserRetryCount = 10;
+
+        /* Категория сертификата */
+        public static uint UnspecifiedCertificate = 0;
+        public static uint TokenUserCertificate = 1;
+        public static uint AuthorityCertificate = 2;
+        public static uint OtherEntityCertificate = 3;
+
     }
 }
