@@ -68,15 +68,15 @@ namespace Extended.ManageFlash
                     Console.WriteLine("Working with flash memory...");
 
                     // Получить объем флеш-памяти
-                    var driveSize = slot.GetDriveSize();
+                    ulong driveSize = slot.GetDriveSize();
                     Console.WriteLine($" Flash drive capacity: {driveSize} Mb.");
 
                     // Полное удаление информации с флеш-памяти с последующим созданием
                     // разделов в соответствии с переданными параметрами
-                    uint volumeRwSize = driveSize / 2;
-                    uint volumeRoSize = driveSize / 4;
-                    uint volumeHiSize = driveSize / 8;
-                    uint volumeCdSize = driveSize - volumeRwSize - volumeRoSize - volumeHiSize;
+                    ulong volumeRwSize = driveSize / 2;
+                    ulong volumeRoSize = driveSize / 4;
+                    ulong volumeHiSize = driveSize / 8;
+                    ulong volumeCdSize = driveSize - volumeRwSize - volumeRoSize - volumeHiSize;
 
                     var initParams = new List<VolumeFormatInfoExtended>()
                     {

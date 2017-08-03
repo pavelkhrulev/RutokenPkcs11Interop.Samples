@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>EncDecGOST28147_89</RootNamespace>
     <AssemblyName>EncDecGOST28147-89</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
@@ -37,8 +37,8 @@
       <HintPath>..\packages\Pkcs11Interop.3.3.0\lib\net45\Pkcs11Interop.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="RutokenPkcs11Interop, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Aktiv.RutokenPkcs11Interop.1.1.0-alpha04\lib\net452\RutokenPkcs11Interop.dll</HintPath>
+    <Reference Include="RutokenPkcs11Interop, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Aktiv.RutokenPkcs11Interop.1.1.1\lib\net45\RutokenPkcs11Interop.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
