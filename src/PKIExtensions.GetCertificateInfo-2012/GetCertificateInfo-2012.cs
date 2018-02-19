@@ -7,14 +7,14 @@ using RutokenPkcs11Interop;
 using RutokenPkcs11Interop.HighLevelAPI;
 using RutokenPkcs11Interop.Samples.Common;
 
-namespace PKIExtensions.GetCertificateInfo
+namespace PKIExtensions.GetCertificateInfo_2012
 {
     /*************************************************************************
     * Rutoken                                                                *
     * Copyright (c) 2003-2017, CJSC Aktiv-Soft. All rights reserved.         *
     * Подробная информация:  http://www.rutoken.ru                           *
     *------------------------------------------------------------------------*
-    * Пример работы с Рутокен ЭЦП при помощи библиотеки PKCS#11 на языке C#  *
+    * Пример работы с Рутокен ЭЦП при помощи библиотеки PKCS#11 на языке C   *
     *------------------------------------------------------------------------*
     * Использование команды получения информации о сертификате на токене:    *
     *  - установление соединения с Рутокен ЭЦП в первом доступном слоте;     *
@@ -23,10 +23,10 @@ namespace PKIExtensions.GetCertificateInfo
     *  - сброс прав доступа Пользователя и закрытие соединения с Рутокен.    *
     *------------------------------------------------------------------------*
     * Примеру необходимо наличие сертификата на токене (например, после      *
-    * ImportCertificate).                                                    *
+    * ImportCertificate-2012).                                               *
     *************************************************************************/
 
-    class GetCertificateInfo
+    class GetCertificateInfo_2012
     {
         // Шаблон для поиска сертификата
         static readonly List<ObjectAttribute> CertificateAttributes = new List<ObjectAttribute>
@@ -40,7 +40,7 @@ namespace PKIExtensions.GetCertificateInfo
             // Тип сертификата - X.509
             new ObjectAttribute(CKA.CKA_CERTIFICATE_TYPE, CKC.CKC_X_509),
             // Идентификатор сертификата, должен совпадать с CKA_ID соответствующей ключевой пары
-            new ObjectAttribute(CKA.CKA_ID, SampleConstants.GostKeyPairId1),
+            new ObjectAttribute(CKA.CKA_ID, SampleConstants.GostKeyPairId_2012_1),
             // Категория сертификата - пользовательский
             new ObjectAttribute(CKA.CKA_CERTIFICATE_CATEGORY, SampleConstants.TokenUserCertificate)
         };

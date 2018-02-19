@@ -47,8 +47,14 @@
         /* DEMO-метка открытого ключа #1 ГОСТ Р 34.10-2001 */
         public static string GostPublicKeyLabel1 = @"Sample GOST R 34.10-2001 Public Key 1 (Aktiv Co.)";
 
+        /* DEMO-метка  открытого ключа #1 ГОСТ Р 34.10-2012 (256 бит) */
+        public static string GostPublicKeyLabel_2012_1 = "Sample GOST R 34.10-2012 (256 bits) Public Key 1 (Aktiv Co.)";
+
         /* DEMO-метка закрытого ключа #1 ГОСТ Р 34.10-2001 */
         public static string GostPrivateKeyLabel1 = @"Sample GOST R 34.10-2001 Private Key 1 (Aktiv Co.)";
+
+        /* DEMO-метка  закрытого ключа #1 ГОСТ Р 34.10-2012 (256 бит) */
+        public static string GostPrivateKeyLabel_2012_1 = "Sample GOST R 34.10-2012 (256 bits) Private Key 1 (Aktiv Co.)";
 
         /* DEMO-метка открытого ключа #2 ГОСТ Р 34.10-2001 */
         public static string GostPublicKeyLabel2 = @"Sample GOST R 34.10-2001 Public Key 2 (Aktiv Co.)";
@@ -58,6 +64,9 @@
 
         /* DEMO ID пары ключей #1 ГОСТ Р 34.10-2001 */
         public static string GostKeyPairId1 = "GOST R 34.10-2001 sample keypair 1 ID (Aktiv Co.)";
+
+        /* DEMO ID пары ключей #1 ГОСТ Р 34.10-2012 (256 бит) */
+        public static string GostKeyPairId_2012_1 = "GOST R 34.10-2012 (256 bits) sample key pair 1 ID (Aktiv Co.)";
 
         /* DEMO ID пары ключей #2 ГОСТ Р 34.10-2001 */
         public static string GostKeyPairId2 = "GOST R 34.10-2001 sample keypair 2 ID (Aktiv Co.)";
@@ -104,6 +113,9 @@
         /* Набор параметров КриптоПро алгоритма ГОСТ Р 34.11-1994 */
         public static byte[] GostR3411Parameters = { 0x06, 0x07, 0x2a, 0x85, 0x03, 0x02, 0x02, 0x1e, 0x01 };
 
+        /* Набор параметров КриптоПро алгоритма ГОСТ Р 34.11-2012(256) */
+        public static byte[] GostR3411_256_Parameters = { 0x06, 0x08, 0x2a, 0x85, 0x03, 0x07, 0x01, 0x01, 0x02, 0x02 };
+
         /* Набор параметров КриптоПро алгоритма ГОСТ Р 34.11-2012(512) */
         public static byte[] GostR3411_512_Parameters = { 0x06, 0x08, 0x2a, 0x85, 0x03, 0x07, 0x01, 0x01, 0x02, 0x03 };
 
@@ -134,5 +146,10 @@
         public static uint AuthorityCertificate = 2;
         public static uint OtherEntityCertificate = 3;
 
+        /* Do not attach signed data to PKCS#7 signature */
+        public static uint PKCS7_DetachedSignature = 0x01;
+
+        /* Use hardware hash in operation, can be passed only to PKCS#7 signature operation */
+        public static uint UseHardwareHash = 0x02;
     }
 }
