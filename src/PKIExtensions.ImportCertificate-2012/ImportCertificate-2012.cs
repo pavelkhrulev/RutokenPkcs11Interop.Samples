@@ -1,46 +1,47 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Text;
 using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.HighLevelAPI;
 using RutokenPkcs11Interop;
-using RutokenPkcs11Interop.HighLevelAPI;
+using RutokenPkcs11Interop.Helpers;
 using RutokenPkcs11Interop.Samples.Common;
 
-namespace PKIExtensions.GetCertificateInfo
+namespace PKIExtensions.ImportCertificate_2012
 {
     /*************************************************************************
     * Rutoken                                                                *
     * Copyright (c) 2003-2017, CJSC Aktiv-Soft. All rights reserved.         *
     * Подробная информация:  http://www.rutoken.ru                           *
     *------------------------------------------------------------------------*
-    * Пример работы с Рутокен ЭЦП при помощи библиотеки PKCS#11 на языке C#  *
+    * Пример работы с Рутокен ЭЦП при помощи библиотеки PKCS#11 на языке C   *
     *------------------------------------------------------------------------*
     * Использование команды получения информации о сертификате на токене:    *
     *  - установление соединения с Рутокен ЭЦП в первом доступном слоте;     *
     *  - выполнение аутентификации Пользователя;                             *
-    *  - получение информации об импортированном на Рутокен сертификате;     *
+    *  - импорт сертификата на Рутокен;                                      *
     *  - сброс прав доступа Пользователя и закрытие соединения с Рутокен.    *
     *------------------------------------------------------------------------*
-    * Примеру необходимо наличие сертификата на токене (например, после      *
-    * ImportCertificate).                                                    *
+    * В примере используется ключевая пара из CreateCSR-PKCS10-2012, и       *
+    * необходимо с помощью запроса из проекта CreateCSR-PKCS10-2012 получить *
+    * сертификат в кодировке base64. Сертификат можно получить в любом УЦ.   *
     *************************************************************************/
 
-    class GetCertificateInfo
+    class ImportCertificate_2012
     {
-        // Шаблон для поиска сертификата
+        // Шаблон для импорта сертификата
         static readonly List<ObjectAttribute> CertificateAttributes = new List<ObjectAttribute>
         {
             // Объект сертификата
             new ObjectAttribute(CKA.CKA_CLASS, CKO.CKO_CERTIFICATE),
+            // Идентификатор сертификата
+            new ObjectAttribute(CKA.CKA_ID, SampleConstants.GostKeyPairId_2012_1),
             // Сертификат является объектом токена
             new ObjectAttribute(CKA.CKA_TOKEN, true),
             // Сертификат доступен без аутентификации
             new ObjectAttribute(CKA.CKA_PRIVATE, false),
             // Тип сертификата - X.509
             new ObjectAttribute(CKA.CKA_CERTIFICATE_TYPE, CKC.CKC_X_509),
-            // Идентификатор сертификата, должен совпадать с CKA_ID соответствующей ключевой пары
-            new ObjectAttribute(CKA.CKA_ID, SampleConstants.GostKeyPairId1),
             // Категория сертификата - пользовательский
             new ObjectAttribute(CKA.CKA_CERTIFICATE_CATEGORY, SampleConstants.TokenUserCertificate)
         };
@@ -67,23 +68,23 @@ namespace PKIExtensions.GetCertificateInfo
 
                         try
                         {
-                            // Получение информации о сертификате
-                            Console.WriteLine("Getting information...");
-                            Console.WriteLine(" Getting certificates...");
+                            // Импорт сертификата
+                            Console.WriteLine("Import certificate...");
+                            // Ввод сертификата в формате base64 и перекодирование в DER
+                            Console.WriteLine(" Enter certificate in base64 format:");
+                            var certificateBase64 = new StringBuilder();
+                            string line;
+                            while ((line = Console.ReadLine()) != null && line != "")
+                            {
+                                certificateBase64.Append(line);
+                            }
+                            byte[] certificateDer = PKIHelpers.GetDerFromBase64(certificateBase64.ToString());
 
-                            // Получить массив хэндлов сертификатов
-                            var certificates = session.FindAllObjects(CertificateAttributes);
-                            Errors.Check(" Certificates not found", certificates != null);
-                            Errors.Check(" Certificates not found", certificates.Any());
+                            CertificateAttributes.Add(new ObjectAttribute(CKA.CKA_VALUE, certificateDer));
+                            ObjectHandle certificateHandle = session.CreateObject(CertificateAttributes);
+                            Errors.Check("Invalid certificate handle", certificateHandle != null);
 
-                            // Получение информации о сертификате
-                            string certificateInfo = session.GetCertificateInfoText(certificates[0]);
-                            Errors.Check(" Certificate info not found", !string.IsNullOrEmpty(certificateInfo));
-
-                            // Распечатать буфер, содержащий информацию о сертификате
-                            Console.WriteLine(certificateInfo);
-
-                            Console.WriteLine("Information has been acquired successfully");
+                            Console.WriteLine("Certificate has been created successfully");
                         }
                         finally
                         {

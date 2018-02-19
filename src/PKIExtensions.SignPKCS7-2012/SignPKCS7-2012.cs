@@ -1,46 +1,60 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.HighLevelAPI;
 using RutokenPkcs11Interop;
 using RutokenPkcs11Interop.HighLevelAPI;
 using RutokenPkcs11Interop.Samples.Common;
 
-namespace PKIExtensions.GetCertificateInfo
+namespace PKIExtensions.SignPKCS7_2012
 {
     /*************************************************************************
     * Rutoken                                                                *
     * Copyright (c) 2003-2017, CJSC Aktiv-Soft. All rights reserved.         *
     * Подробная информация:  http://www.rutoken.ru                           *
     *------------------------------------------------------------------------*
-    * Пример работы с Рутокен ЭЦП при помощи библиотеки PKCS#11 на языке C#  *
+    * Пример работы с Рутокен ЭЦП при помощи библиотеки PKCS#11 на языке C   *
     *------------------------------------------------------------------------*
-    * Использование команды получения информации о сертификате на токене:    *
+    * Использование команды подписи данных ключевой парой ГОСТ Р 34.10-2012  *
+    * (256 бит) в формате PKCS#7:                                            *
     *  - установление соединения с Рутокен ЭЦП в первом доступном слоте;     *
     *  - выполнение аутентификации Пользователя;                             *
-    *  - получение информации об импортированном на Рутокен сертификате;     *
+    *  - поиск закрытого ключа ГОСТ Р 34.10-2012 (256 бит) и сертификата     *
+    *    на Рутокен;                                                         *
+    *  - подпись данных в формате PKCS#7;                                    *
     *  - сброс прав доступа Пользователя и закрытие соединения с Рутокен.    *
+    *                                                                        *
+    * На данный момент функция C_EX_PKCS7Sign поддерживает только алгоритмы  *
+    * ГОСТ Р 34.10-2001 и ГОСТ Р 34.10-2012 (256 бит)                        *
     *------------------------------------------------------------------------*
-    * Примеру необходимо наличие сертификата на токене (например, после      *
-    * ImportCertificate).                                                    *
+    * Пример использует объекты, созданные в памяти Рутокен примерами        *
+    * CreateCSR-PKCS10-2012 и ImportCertificate-2012                         *
     *************************************************************************/
 
-    class GetCertificateInfo
+    class SignPKCS7_2012
     {
-        // Шаблон для поиска сертификата
+        // Шаблон для поиска закрытого ключа ГОСТ Р 34.10-2012 (256 бит)
+        static readonly List<ObjectAttribute> PrivateKeyAttributes = new List<ObjectAttribute>
+        {
+            // Объект закрытого ключа
+            new ObjectAttribute(CKA.CKA_CLASS, CKO.CKO_PRIVATE_KEY),
+            // Закрытый ключ является объектом токена
+            new ObjectAttribute(CKA.CKA_TOKEN, true),
+            // Идентификатор искомой пары
+            new ObjectAttribute(CKA.CKA_ID, SampleConstants.GostKeyPairId_2012_1),
+       };
+
+        // Шаблон для поиска сертификата ключа подписи
         static readonly List<ObjectAttribute> CertificateAttributes = new List<ObjectAttribute>
         {
             // Объект сертификата
             new ObjectAttribute(CKA.CKA_CLASS, CKO.CKO_CERTIFICATE),
             // Сертификат является объектом токена
             new ObjectAttribute(CKA.CKA_TOKEN, true),
-            // Сертификат доступен без аутентификации
-            new ObjectAttribute(CKA.CKA_PRIVATE, false),
+            // Идентификатор сертификата
+            new ObjectAttribute(CKA.CKA_ID, SampleConstants.GostKeyPairId_2012_1),
             // Тип сертификата - X.509
             new ObjectAttribute(CKA.CKA_CERTIFICATE_TYPE, CKC.CKC_X_509),
-            // Идентификатор сертификата, должен совпадать с CKA_ID соответствующей ключевой пары
-            new ObjectAttribute(CKA.CKA_ID, SampleConstants.GostKeyPairId1),
             // Категория сертификата - пользовательский
             new ObjectAttribute(CKA.CKA_CERTIFICATE_CATEGORY, SampleConstants.TokenUserCertificate)
         };
@@ -67,23 +81,28 @@ namespace PKIExtensions.GetCertificateInfo
 
                         try
                         {
-                            // Получение информации о сертификате
-                            Console.WriteLine("Getting information...");
-                            Console.WriteLine(" Getting certificates...");
+                            // Формирование подписи
+                            Console.WriteLine("Signing...");
 
-                            // Получить массив хэндлов сертификатов
-                            var certificates = session.FindAllObjects(CertificateAttributes);
-                            Errors.Check(" Certificates not found", certificates != null);
-                            Errors.Check(" Certificates not found", certificates.Any());
+                            // Поиск закрытого ключа на токене
+                            Console.WriteLine(" Getting private key...");
+                            List<ObjectHandle> privateKeys = session.FindAllObjects(PrivateKeyAttributes);
+                            Errors.Check("No private keys found", privateKeys.Count > 0);
 
-                            // Получение информации о сертификате
-                            string certificateInfo = session.GetCertificateInfoText(certificates[0]);
-                            Errors.Check(" Certificate info not found", !string.IsNullOrEmpty(certificateInfo));
+                            // Поиск сертификата на токене
+                            Console.WriteLine(" Getting certificate...");
+                            List<ObjectHandle> certificates = session.FindAllObjects(CertificateAttributes);
+                            Errors.Check("No certificates found", certificates.Count > 0);
 
-                            // Распечатать буфер, содержащий информацию о сертификате
-                            Console.WriteLine(certificateInfo);
+                            // Подпись данных
+                            byte[] signature =
+                                session.PKCS7Sign(ConvertUtils.Utf8StringToBytes(SampleData.PKCS7_SignData),
+                                    certificates[0], privateKeys[0], null, SampleConstants.UseHardwareHash);
 
-                            Console.WriteLine("Information has been acquired successfully");
+                            // Распечатать буфер, содержащий подпись
+                            Console.WriteLine(" Signature buffer is:");
+                            Helpers.PrintByteArray(signature);
+                            Console.WriteLine("Data has been signed successfully");
                         }
                         finally
                         {
