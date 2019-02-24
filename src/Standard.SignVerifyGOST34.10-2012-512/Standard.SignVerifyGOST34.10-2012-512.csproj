@@ -4,15 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A5EAFB26-AF48-4B74-9156-C5F448B04251}</ProjectGuid>
+    <ProjectGuid>{6EE2B2BA-2B42-4982-971C-E62829E2A15D}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Standard.HashGOST34._11_2012_512</RootNamespace>
-    <AssemblyName>Standard.HashGOST34.11-2012-512</AssemblyName>
+    <RootNamespace>SignVerifyGOST34._10_2012</RootNamespace>
+    <AssemblyName>SignVerifyGOST34.10-2012</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -52,7 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HashGOST34.11-2012-512.cs" />
+    <Compile Include="SignVerifyGOST34.10-2012-512.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

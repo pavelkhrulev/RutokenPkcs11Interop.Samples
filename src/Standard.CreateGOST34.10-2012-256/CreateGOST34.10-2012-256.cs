@@ -44,9 +44,9 @@ namespace Standard.CreateGOST3410_2012_256
             new ObjectAttribute(CKA.CKA_TOKEN, true),
             // Ключ доступен без аутентификации на токене
             new ObjectAttribute(CKA.CKA_PRIVATE, false),
-            // Параметры алгоритма ГОСТ Р 34.10-2012
+            // Параметры алгоритма ГОСТ Р 34.10-2012(256)
             new ObjectAttribute((uint) Extended_CKA.CKA_GOSTR3410_PARAMS, SampleConstants.GostR3410_256_Parameters),
-            // Параметры алгоритма ГОСТ Р 34.11-2012
+            // Параметры алгоритма ГОСТ Р 34.11-2012(256)
             new ObjectAttribute((uint) Extended_CKA.CKA_GOSTR3411_PARAMS, SampleConstants.GostR3411_256_Parameters)
         };
 
@@ -68,9 +68,9 @@ namespace Standard.CreateGOST3410_2012_256
             new ObjectAttribute(CKA.CKA_PRIVATE, true),
             // Ключ поддерживает выработку общих ключей (VKO)
             new ObjectAttribute(CKA.CKA_DERIVE, true),
-            // Параметры алгоритма ГОСТ Р 34.10-2012
+            // Параметры алгоритма ГОСТ Р 34.10-2012(256)
             new ObjectAttribute((uint) Extended_CKA.CKA_GOSTR3410_PARAMS, SampleConstants.GostR3410_256_Parameters),
-            // Параметры алгоритма ГОСТ Р 34.11-2012
+            // Параметры алгоритма ГОСТ Р 34.11-2012(256)
             new ObjectAttribute((uint) Extended_CKA.CKA_GOSTR3411_PARAMS, SampleConstants.GostR3411_256_Parameters)
         };
 
@@ -90,9 +90,9 @@ namespace Standard.CreateGOST3410_2012_256
             new ObjectAttribute(CKA.CKA_TOKEN, true),
             // Ключ доступен без аутентификации на токене
             new ObjectAttribute(CKA.CKA_PRIVATE, false),
-            // Параметры алгоритма ГОСТ Р 34.10-2012
+            // Параметры алгоритма ГОСТ Р 34.10-2012(256)
             new ObjectAttribute((uint) Extended_CKA.CKA_GOSTR3410_PARAMS, SampleConstants.GostR3410_256_Parameters),
-            // Параметры алгоритма ГОСТ Р 34.11-2012
+            // Параметры алгоритма ГОСТ Р 34.11-2012(256)
             new ObjectAttribute((uint) Extended_CKA.CKA_GOSTR3411_PARAMS, SampleConstants.GostR3411_256_Parameters)
         };
 
@@ -114,9 +114,9 @@ namespace Standard.CreateGOST3410_2012_256
             new ObjectAttribute(CKA.CKA_PRIVATE, true),
             // Ключ поддерживает выработку общих ключей (VKO)
             new ObjectAttribute(CKA.CKA_DERIVE, true),
-            // Параметры алгоритма ГОСТ Р 34.10-2012
+            // Параметры алгоритма ГОСТ Р 34.10-2012(256)
             new ObjectAttribute((uint) Extended_CKA.CKA_GOSTR3410_PARAMS, SampleConstants.GostR3410_256_Parameters),
-            // Параметры алгоритма ГОСТ Р 34.11-2012
+            // Параметры алгоритма ГОСТ Р 34.11-2012(256)
             new ObjectAttribute((uint) Extended_CKA.CKA_GOSTR3411_PARAMS, SampleConstants.GostR3411_256_Parameters)
         };
 
