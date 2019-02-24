@@ -9,7 +9,7 @@ namespace WaitForSlotEvent
 {
     /*************************************************************************
     * Rutoken                                                                *
-    * Copyright (c) 2003-2017, CJSC Aktiv-Soft. All rights reserved.         *
+    * Copyright (c) 2003-2019, CJSC Aktiv-Soft. All rights reserved.         *
     * Подробная информация:  http://www.rutoken.ru                           *
     *------------------------------------------------------------------------*
     * Пример работы с Рутокен при помощи библиотеки PKCS#11 на языке C       *
@@ -31,8 +31,8 @@ namespace WaitForSlotEvent
             while (true)
             {
                 // Ожидать событие в некотором слоте
-                bool eventOccured = false;
-                ulong slotId = 0;
+                bool eventOccured;
+                ulong slotId;
                 pkcs11.WaitForSlotEvent(false, out eventOccured, out slotId);
 
                 // Получить информацию о слоте
@@ -63,8 +63,8 @@ namespace WaitForSlotEvent
                     {
                         // Получить все события в слотах
                         // (не блокируя поток, используем флаг CKF_DONT_BLOCK)
-                        bool eventOccured = false;
-                        ulong slotId = 0;
+                        bool eventOccured;
+                        ulong slotId;
                         pkcs11.WaitForSlotEvent(true, out eventOccured, out slotId);
                         if (!eventOccured)
                         {
