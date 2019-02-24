@@ -41,7 +41,7 @@ namespace PKIExtensions.SignPKCS7_2012
             // Закрытый ключ является объектом токена
             new ObjectAttribute(CKA.CKA_TOKEN, true),
             // Идентификатор искомой пары
-            new ObjectAttribute(CKA.CKA_ID, SampleConstants.GostKeyPairId_2012_1),
+            new ObjectAttribute(CKA.CKA_ID, SampleConstants.Gost256KeyPairId1),
        };
 
         // Шаблон для поиска сертификата ключа подписи
@@ -52,7 +52,7 @@ namespace PKIExtensions.SignPKCS7_2012
             // Сертификат является объектом токена
             new ObjectAttribute(CKA.CKA_TOKEN, true),
             // Идентификатор сертификата
-            new ObjectAttribute(CKA.CKA_ID, SampleConstants.GostKeyPairId_2012_1),
+            new ObjectAttribute(CKA.CKA_ID, SampleConstants.Gost256KeyPairId1),
             // Тип сертификата - X.509
             new ObjectAttribute(CKA.CKA_CERTIFICATE_TYPE, CKC.CKC_X_509),
             // Категория сертификата - пользовательский

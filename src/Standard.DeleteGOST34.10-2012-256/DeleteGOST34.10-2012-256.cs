@@ -6,7 +6,7 @@ using RutokenPkcs11Interop;
 using RutokenPkcs11Interop.Common;
 using RutokenPkcs11Interop.Samples.Common;
 
-namespace DeleteGOST3410_2012
+namespace Standard.DeleteGOST3410_2012_256
 {
     /*************************************************************************
     * Rutoken                                                                *
@@ -19,33 +19,33 @@ namespace DeleteGOST3410_2012
     *  - установление соединения с Рутокен в первом доступном слоте;         *
     *  - выполнение аутентификации Пользователя;                             *
     *  - удаление ключей ГОСТ Р 34.10-2012                                   *
-    *    с длиной закрытого ключа 512 бит;                                   *
+    *    с длиной закрытого ключа 256 бит;                                   *
     *  - сброс прав доступа Пользователя на Рутокен и закрытие соединения    *
     *    с Рутокен.                                                          *
     *------------------------------------------------------------------------*
-    * Пример удаляет все ключевые пары, созданные в CreateGOST34.10-2012.    *
+    * Пример удаляет все ключевые пары, созданные в CreateGOST34.10-2012-256.*
     *************************************************************************/
 
-    class DeleteGOST3410_2012
+    class DeleteGOST3410_2012_256
     {
-        // Шаблон для поиска ключевой пары ГОСТ Р 34.10-2012(512)
+        // Шаблон для поиска ключевой пары ГОСТ Р 34.10-2012(256)
         // (первая ключевая пара для подписи и выработки общего ключа)
         static readonly List<ObjectAttribute> KeyPair1Attributes = new List<ObjectAttribute>
         {
             // Идентификатор ключевой пары
-            new ObjectAttribute(CKA.CKA_ID, SampleConstants.Gost512KeyPairId1),
-            // Тип ключа - ГОСТ Р 34.10-2012(512)
-            new ObjectAttribute(CKA.CKA_KEY_TYPE, (uint) Extended_CKK.CKK_GOSTR3410_512)
+            new ObjectAttribute(CKA.CKA_ID, SampleConstants.Gost256KeyPairId1),
+            // Тип ключа - ГОСТ Р 34.10-2012(256)
+            new ObjectAttribute(CKA.CKA_KEY_TYPE, (uint) Extended_CKK.CKK_GOSTR3410)
         };
 
-        // Шаблон для поиска ключевой пары ГОСТ Р 34.10-2012(512)
+        // Шаблон для поиска ключевой пары ГОСТ Р 34.10-2012(256)
         // (вторая ключевая пара для подписи и выработки общего ключа)
         static readonly List<ObjectAttribute> KeyPair2Attributes = new List<ObjectAttribute>
         {
             // Идентификатор ключевой пары
-            new ObjectAttribute(CKA.CKA_ID, SampleConstants.Gost512KeyPairId2),
-            // Тип ключа - ГОСТ Р 34.10-2012(512)
-            new ObjectAttribute(CKA.CKA_KEY_TYPE, (uint) Extended_CKK.CKK_GOSTR3410_512)
+            new ObjectAttribute(CKA.CKA_ID, SampleConstants.Gost256KeyPairId2),
+            // Тип ключа - ГОСТ Р 34.10-2012(256)
+            new ObjectAttribute(CKA.CKA_KEY_TYPE, (uint) Extended_CKK.CKK_GOSTR3410)
         };
 
         static readonly List<List<ObjectAttribute>> KeyPairsAttributes = new List<List<ObjectAttribute>>

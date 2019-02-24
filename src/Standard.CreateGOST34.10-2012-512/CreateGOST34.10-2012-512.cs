@@ -6,7 +6,7 @@ using RutokenPkcs11Interop;
 using RutokenPkcs11Interop.Common;
 using RutokenPkcs11Interop.Samples.Common;
 
-namespace CreateGOST3410_2012
+namespace CreateGOST3410_2012_512
 {
     /*************************************************************************
     * Rutoken                                                                *
@@ -27,7 +27,7 @@ namespace CreateGOST3410_2012
     * работы с библиотекой PKCS#11.                                          *
     *************************************************************************/
 
-    class CreateGOST3410_2012
+    class CreateGOST3410_2012_512
     {
         // Шаблон для генерации открытого ключа ГОСТ Р 34.10-2012
         // (первая ключевая пара для подписи и обмена ключами)

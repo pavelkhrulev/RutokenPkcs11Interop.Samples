@@ -40,7 +40,7 @@ namespace PKIExtensions.GetCertificateInfo_2012
             // Тип сертификата - X.509
             new ObjectAttribute(CKA.CKA_CERTIFICATE_TYPE, CKC.CKC_X_509),
             // Идентификатор сертификата, должен совпадать с CKA_ID соответствующей ключевой пары
-            new ObjectAttribute(CKA.CKA_ID, SampleConstants.GostKeyPairId_2012_1),
+            new ObjectAttribute(CKA.CKA_ID, SampleConstants.Gost256KeyPairId1),
             // Категория сертификата - пользовательский
             new ObjectAttribute(CKA.CKA_CERTIFICATE_CATEGORY, SampleConstants.TokenUserCertificate)
         };
