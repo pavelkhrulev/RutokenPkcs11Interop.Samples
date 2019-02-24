@@ -29,7 +29,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Standard.EncDecGOST28147-89
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Standard.EncDecRSA", "Standard.EncDecRSA\Standard.EncDecRSA.csproj", "{2E1927DB-477F-4607-B0CC-BE592FC01BE9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Standard.HashGOST34.11-2012", "Standard.HashGOST34.11-2012\Standard.HashGOST34.11-2012.csproj", "{B8226E4F-108C-4139-A475-F0CF7E4AFA6D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Standard.HashGOST34.11-2012-256", "Standard.HashGOST34.11-2012-256\Standard.HashGOST34.11-2012-256.csproj", "{B8226E4F-108C-4139-A475-F0CF7E4AFA6D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Standard.HashGOST34.11-94", "Standard.HashGOST34.11-94\Standard.HashGOST34.11-94.csproj", "{F6D27B31-1C3A-4E7E-8D28-87A34576C08B}"
 EndProject
@@ -100,6 +100,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Standard.CreateGOST34.10-2012-256", "Standard.CreateGOST34.10-2012-256\Standard.CreateGOST34.10-2012-256.csproj", "{875ECD22-B216-407B-B4AC-2EAA439FD755}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Standard.DeleteGOST34.10-2012-256", "Standard.DeleteGOST34.10-2012-256\Standard.DeleteGOST34.10-2012-256.csproj", "{A55652B1-D867-4FC0-AC91-D0D418E51379}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Standard.HashGOST34.11-2012-512", "Standard.HashGOST34.11-2012-512\Standard.HashGOST34.11-2012-512.csproj", "{A5EAFB26-AF48-4B74-9156-C5F448B04251}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -303,6 +305,10 @@ Global
 		{A55652B1-D867-4FC0-AC91-D0D418E51379}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A55652B1-D867-4FC0-AC91-D0D418E51379}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A55652B1-D867-4FC0-AC91-D0D418E51379}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5EAFB26-AF48-4B74-9156-C5F448B04251}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5EAFB26-AF48-4B74-9156-C5F448B04251}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5EAFB26-AF48-4B74-9156-C5F448B04251}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5EAFB26-AF48-4B74-9156-C5F448B04251}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
