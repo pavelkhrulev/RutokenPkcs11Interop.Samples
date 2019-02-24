@@ -10,7 +10,7 @@ namespace CreateGOST3410_2012_512
 {
     /*************************************************************************
     * Rutoken                                                                *
-    * Copyright (c) 2003-2017, CJSC Aktiv-Soft. All rights reserved.         *
+    * Copyright (c) 2003-2019, CJSC Aktiv-Soft. All rights reserved.         *
     * Подробная информация:  http://www.rutoken.ru                           *
     *------------------------------------------------------------------------*
     * Пример работы с Рутокен при помощи библиотеки PKCS#11 на языке C#      *
@@ -45,7 +45,7 @@ namespace CreateGOST3410_2012_512
             new ObjectAttribute(CKA.CKA_TOKEN, true),
             // Ключ доступен без аутентификации на токене
             new ObjectAttribute(CKA.CKA_PRIVATE, false),
-            // Параметры алгоритма ГОСТ Р 34.10-2012
+            // Параметры алгоритма ГОСТ Р 34.10-2012(512)
             new ObjectAttribute((uint) Extended_CKA.CKA_GOSTR3410_PARAMS, SampleConstants.GostR3410_512_Parameters)
         };
 
@@ -67,9 +67,9 @@ namespace CreateGOST3410_2012_512
             new ObjectAttribute(CKA.CKA_PRIVATE, true),
             // Ключ поддерживает выработку общих ключей (VKO)
             new ObjectAttribute(CKA.CKA_DERIVE, true),
-            // Параметры алгоритма ГОСТ Р 34.10-2012
+            // Параметры алгоритма ГОСТ Р 34.10-2012(512)
             new ObjectAttribute((uint) Extended_CKA.CKA_GOSTR3410_PARAMS, SampleConstants.GostR3410_512_Parameters),
-            // Параметры алгоритма ГОСТ Р 34.11-2012
+            // Параметры алгоритма ГОСТ Р 34.11-2012(512)
             new ObjectAttribute((uint) Extended_CKA.CKA_GOSTR3411_PARAMS, SampleConstants.GostR3411_512_Parameters)
         };
 
@@ -89,7 +89,7 @@ namespace CreateGOST3410_2012_512
             new ObjectAttribute(CKA.CKA_TOKEN, true),
             // Ключ доступен без аутентификации на токене
             new ObjectAttribute(CKA.CKA_PRIVATE, false),
-            // Параметры алгоритма ГОСТ Р 34.10-2012
+            // Параметры алгоритма ГОСТ Р 34.10-2012(512)
             new ObjectAttribute((uint) Extended_CKA.CKA_GOSTR3410_PARAMS, SampleConstants.GostR3410_512_Parameters)
         };
 
@@ -111,9 +111,9 @@ namespace CreateGOST3410_2012_512
             new ObjectAttribute(CKA.CKA_PRIVATE, true),
             // Ключ поддерживает выработку общих ключей (VKO)
             new ObjectAttribute(CKA.CKA_DERIVE, true),
-            // Параметры алгоритма ГОСТ Р 34.10-2012
+            // Параметры алгоритма ГОСТ Р 34.10-2012(512)
             new ObjectAttribute((uint) Extended_CKA.CKA_GOSTR3410_PARAMS, SampleConstants.GostR3410_512_Parameters),
-            // Параметры алгоритма ГОСТ Р 34.11-2012
+            // Параметры алгоритма ГОСТ Р 34.11-2012(512)
             new ObjectAttribute((uint) Extended_CKA.CKA_GOSTR3411_PARAMS, SampleConstants.GostR3411_512_Parameters)
         };
 
@@ -148,17 +148,17 @@ namespace CreateGOST3410_2012_512
                         try
                         {
                             // Определить механизм генерации ключа
-                            Console.WriteLine("Generating GOST R 34.10-2012 exchange key pairs...");
+                            Console.WriteLine("Generating GOST R 34.10-2012-512 exchange key pairs...");
                             var mechanism = new Mechanism((uint)Extended_CKM.CKM_GOSTR3410_512_KEY_PAIR_GEN);
 
-                            // Сгенерировать первую ключевую пару ГОСТ Р 34.10-2012
+                            // Сгенерировать первую ключевую пару ГОСТ Р 34.10-2012(512)
                             ObjectHandle publicKeyHandle1;
                             ObjectHandle privateKeyHandle1;
                             session.GenerateKeyPair(mechanism, PublicKeyAttributes1, PrivateKeyAttributes1, out publicKeyHandle1, out privateKeyHandle1);
                             Errors.Check("Invalid public key 1 handle", publicKeyHandle1.ObjectId != CK.CK_INVALID_HANDLE);
                             Errors.Check("Invalid private key 1 handle", privateKeyHandle1.ObjectId != CK.CK_INVALID_HANDLE);
 
-                            // Сгенерировать вторую ключевую пару ГОСТ Р 34.10-2012
+                            // Сгенерировать вторую ключевую пару ГОСТ Р 34.10-2012(512)
                             ObjectHandle publicKeyHandle2;
                             ObjectHandle privateKeyHandle2;
                             session.GenerateKeyPair(mechanism, PublicKeyAttributes2, PrivateKeyAttributes2, out publicKeyHandle2, out privateKeyHandle2);

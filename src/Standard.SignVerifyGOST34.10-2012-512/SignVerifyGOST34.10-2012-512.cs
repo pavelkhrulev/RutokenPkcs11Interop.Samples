@@ -6,11 +6,11 @@ using RutokenPkcs11Interop;
 using RutokenPkcs11Interop.Common;
 using RutokenPkcs11Interop.Samples.Common;
 
-namespace SignVerifyGOST3410_2012
+namespace SignVerifyGOST3410_2012_512
 {
     /*************************************************************************
     * Rutoken                                                                *
-    * Copyright (c) 2003-2017, CJSC Aktiv-Soft. All rights reserved.         *
+    * Copyright (c) 2003-2019, CJSC Aktiv-Soft. All rights reserved.         *
     * Подробная информация:  http://www.rutoken.ru                           *
     *------------------------------------------------------------------------*
     * Пример работы с Рутокен при помощи библиотеки PKCS#11 на языке C#      *
@@ -25,10 +25,10 @@ namespace SignVerifyGOST3410_2012
     *    с Рутокен.                                                          *
     *------------------------------------------------------------------------*
     * Пример использует объекты, созданные в памяти Рутокен примером         *
-    * CreateGOST34.10-2012.                                                  *
+    * CreateGOST34.10-2012-512.                                              *
     *************************************************************************/
 
-    class SignVerifyGOST3410_2012
+    class SignVerifyGOST3410_2012_512
     {
         // Шаблон для поиска закрытого ключа для цифровой подписи
         static readonly List<ObjectAttribute> PrivateKeyAttributes = new List<ObjectAttribute>
@@ -99,7 +99,7 @@ namespace SignVerifyGOST3410_2012
                             Helpers.PrintByteArray(hash);
                             Console.WriteLine("Hashing has been completed successfully");
 
-                            // Инициализация операции подписи данных по алгоритму ГОСТ Р 34.10-2001
+                            // Инициализация операции подписи данных по алгоритму ГОСТ Р 34.10-2012-512
                             var signMechanism = new Mechanism((uint)Extended_CKM.CKM_GOSTR3410_512);
 
                             // Подписать данные

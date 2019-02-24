@@ -8,11 +8,11 @@ using RutokenPkcs11Interop.Common;
 using RutokenPkcs11Interop.HighLevelAPI.MechanismParams;
 using RutokenPkcs11Interop.Samples.Common;
 
-namespace VKO_GOST3410_2012
+namespace VKO_GOST3410_2012_512
 {
     /*************************************************************************
     * Rutoken                                                                *
-    * Copyright (c) 2003-2017, CJSC Aktiv-Soft. All rights reserved.         *
+    * Copyright (c) 2003-2019, CJSC Aktiv-Soft. All rights reserved.         *
     * Подробная информация:  http://www.rutoken.ru                           *
     *------------------------------------------------------------------------*
     * Пример работы с Рутокен при помощи библиотеки PKCS#11 на языке C#      *
@@ -29,10 +29,10 @@ namespace VKO_GOST3410_2012
     *    с Рутокен.                                                          *
     *------------------------------------------------------------------------*
     * Пример использует объекты, созданные в памяти Рутокен примером         *
-    * CreateGOST34.10-2012.                                                  *
+    * CreateGOST34.10-2012-512.                                              *
     *************************************************************************/
 
-    class VKO_GOST3410_2012
+    class VKO_GOST3410_2012_512
     {
         // Шаблон для поиска закрытого ключа отправителя
         static readonly List<ObjectAttribute> SenderPrivateKeyAttributes = new List<ObjectAttribute>
