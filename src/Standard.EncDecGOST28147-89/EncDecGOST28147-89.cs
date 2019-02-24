@@ -10,7 +10,7 @@ namespace EncDecGOST28147_89
 {
     /*************************************************************************
     * Rutoken                                                                *
-    * Copyright (c) 2003-2017, CJSC Aktiv-Soft. All rights reserved.         *
+    * Copyright (c) 2003-2019, CJSC Aktiv-Soft. All rights reserved.         *
     * Подробная информация:  http://www.rutoken.ru                           *
     *------------------------------------------------------------------------*
     * Пример работы с Рутокен при помощи библиотеки PKCS#11 на языке C#      *
@@ -73,7 +73,8 @@ namespace EncDecGOST28147_89
                             // Инициализировать операцию шифрования
                             var mechanism = new Mechanism((uint)Extended_CKM.CKM_GOST28147_ECB);
 
-                            // Зашифровать данные
+                            // Зашифровать данные (при шифровании с использованием механизма
+                            // CKM_GOST28147_ECB размер данных должен быть кратен 8)
                             Console.WriteLine("Encrypting...");
                             byte[] encryptedData = session.Encrypt(mechanism, keys[0], sourceData);
 
