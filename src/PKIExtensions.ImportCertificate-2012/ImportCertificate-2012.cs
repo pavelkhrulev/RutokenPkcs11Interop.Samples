@@ -35,7 +35,7 @@ namespace PKIExtensions.ImportCertificate_2012
             // Объект сертификата
             new ObjectAttribute(CKA.CKA_CLASS, CKO.CKO_CERTIFICATE),
             // Идентификатор сертификата
-            new ObjectAttribute(CKA.CKA_ID, SampleConstants.GostKeyPairId_2012_1),
+            new ObjectAttribute(CKA.CKA_ID, SampleConstants.Gost256KeyPairId1),
             // Сертификат является объектом токена
             new ObjectAttribute(CKA.CKA_TOKEN, true),
             // Сертификат доступен без аутентификации

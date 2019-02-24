@@ -37,7 +37,7 @@ namespace PKIExtensions.DeleteObjects_2012
             // Открытый ключ является объектом токена
             new ObjectAttribute(CKA.CKA_TOKEN, true),
             // Идентификатор искомой пары
-            new ObjectAttribute(CKA.CKA_ID, SampleConstants.GostKeyPairId_2012_1),
+            new ObjectAttribute(CKA.CKA_ID, SampleConstants.Gost256KeyPairId1),
             // Тип ключа - ГОСТ Р 34.10-2001
             new ObjectAttribute(CKA.CKA_KEY_TYPE, (uint) Extended_CKK.CKK_GOSTR3410)
         };
@@ -50,7 +50,7 @@ namespace PKIExtensions.DeleteObjects_2012
             // Закрытый ключ является объектом токена
             new ObjectAttribute(CKA.CKA_TOKEN, true),
             // Идентификатор искомой пары
-            new ObjectAttribute(CKA.CKA_ID, SampleConstants.GostKeyPairId_2012_1),
+            new ObjectAttribute(CKA.CKA_ID, SampleConstants.Gost256KeyPairId1),
             // Тип ключа - ГОСТ Р 34.10-2001
             new ObjectAttribute(CKA.CKA_KEY_TYPE, (uint) Extended_CKK.CKK_GOSTR3410)
         };
@@ -65,7 +65,7 @@ namespace PKIExtensions.DeleteObjects_2012
             // Тип сертификата - X.509
             new ObjectAttribute(CKA.CKA_CERTIFICATE_TYPE, CKC.CKC_X_509),
             // Идентификатор сертификата
-            new ObjectAttribute(CKA.CKA_ID, SampleConstants.GostKeyPairId_2012_1),
+            new ObjectAttribute(CKA.CKA_ID, SampleConstants.Gost256KeyPairId1),
             // Категория сертификата - пользовательский
             new ObjectAttribute(CKA.CKA_CERTIFICATE_CATEGORY, SampleConstants.TokenUserCertificate)
         };

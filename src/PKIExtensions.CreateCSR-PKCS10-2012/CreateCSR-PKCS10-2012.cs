@@ -39,9 +39,9 @@ namespace PKIExtensions.CreateCSR_PKCS10_2012
             // Объект открытого ключа
             new ObjectAttribute(CKA.CKA_CLASS, CKO.CKO_PUBLIC_KEY),
             // Метка ключа
-            new ObjectAttribute(CKA.CKA_LABEL, SampleConstants.GostPublicKeyLabel_2012_1),
+            new ObjectAttribute(CKA.CKA_LABEL, SampleConstants.Gost256PublicKeyLabel1),
             // Идентификатор ключевой пары #1 (должен совпадать у открытого и закрытого ключей)
-            new ObjectAttribute(CKA.CKA_ID, SampleConstants.GostKeyPairId_2012_1),
+            new ObjectAttribute(CKA.CKA_ID, SampleConstants.Gost256KeyPairId1),
             // Тип ключа
             new ObjectAttribute(CKA.CKA_KEY_TYPE, (uint) Extended_CKK.CKK_GOSTR3410),
             // Открытый ключ является объектом токена
@@ -61,9 +61,9 @@ namespace PKIExtensions.CreateCSR_PKCS10_2012
             // Объект закрытого ключа
             new ObjectAttribute(CKA.CKA_CLASS, CKO.CKO_PRIVATE_KEY),
             // Метка ключа
-            new ObjectAttribute(CKA.CKA_LABEL, SampleConstants.GostPrivateKeyLabel_2012_1),
+            new ObjectAttribute(CKA.CKA_LABEL, SampleConstants.Gost256PrivateKeyLabel1),
             // Идентификатор ключевой пары #1 (должен совпадать у открытого и закрытого ключей)
-            new ObjectAttribute(CKA.CKA_ID, SampleConstants.GostKeyPairId_2012_1),
+            new ObjectAttribute(CKA.CKA_ID, SampleConstants.Gost256KeyPairId1),
             // Тип ключа
             new ObjectAttribute(CKA.CKA_KEY_TYPE, (uint) Extended_CKK.CKK_GOSTR3410),
             // Открытый ключ является объектом токена
