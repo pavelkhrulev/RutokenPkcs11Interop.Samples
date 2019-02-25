@@ -4,14 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{809A7968-4461-4FF9-B157-2808DD022F79}</ProjectGuid>
+    <ProjectGuid>{B4303A5F-DFE7-48B0-9789-849A3B036121}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>VKO_GOST34._10_2001</RootNamespace>
-    <AssemblyName>VKO-GOST34.10-2001</AssemblyName>
+    <RootNamespace>Standard.VKO_GOST3410_2001</RootNamespace>
+    <AssemblyName>Standard.VKO-GOST34.10-2001</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -37,8 +36,8 @@
       <HintPath>..\packages\Pkcs11Interop.3.3.0\lib\net45\Pkcs11Interop.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="RutokenPkcs11Interop, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Aktiv.RutokenPkcs11Interop.1.1.1\lib\net45\RutokenPkcs11Interop.dll</HintPath>
+    <Reference Include="RutokenPkcs11Interop, Version=1.2.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Aktiv.RutokenPkcs11Interop.1.2.1\lib\net45\RutokenPkcs11Interop.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />

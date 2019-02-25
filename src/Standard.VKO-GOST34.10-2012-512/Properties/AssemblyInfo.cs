@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("VKO-GOST34.10-2012")]
+[assembly: AssemblyTitle("Standard.VKO-GOST34.10-2012-512")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("VKO-GOST34.10-2012")]
-[assembly: AssemblyCopyright("Copyright ©  2017")]
+[assembly: AssemblyProduct("Standard.VKO-GOST34.10-2012-512")]
+[assembly: AssemblyCopyright("Copyright ©  2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("1d1f47a7-5c16-4ca5-b7ea-0ae764113955")]
+[assembly: Guid("037427f3-a765-4b05-8dfa-b21e31c87aeb")]
 
 // Version information for an assembly consists of the following four values:
 //
