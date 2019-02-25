@@ -121,6 +121,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Standard.VKO-GOST34.10-2012
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Standard.VKO-GOST34.10-2012-512", "Standard.VKO-GOST34.10-2012-512\Standard.VKO-GOST34.10-2012-512.csproj", "{037427F3-A765-4B05-8DFA-B21E31C87AEB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Standard.SignVerifyGOST28147-89-MAC", "Standard.SignVerifyGOST28147-89-MAC\Standard.SignVerifyGOST28147-89-MAC.csproj", "{1B53B13B-5AD5-4F6F-AD20-F2A4BAAFD8C9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -363,6 +365,10 @@ Global
 		{037427F3-A765-4B05-8DFA-B21E31C87AEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{037427F3-A765-4B05-8DFA-B21E31C87AEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{037427F3-A765-4B05-8DFA-B21E31C87AEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B53B13B-5AD5-4F6F-AD20-F2A4BAAFD8C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B53B13B-5AD5-4F6F-AD20-F2A4BAAFD8C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B53B13B-5AD5-4F6F-AD20-F2A4BAAFD8C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B53B13B-5AD5-4F6F-AD20-F2A4BAAFD8C9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
