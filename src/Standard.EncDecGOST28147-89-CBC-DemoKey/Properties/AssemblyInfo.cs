@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("SignVerifyGOST34.11-94-HMAC")]
+[assembly: AssemblyTitle("EncDecGOST28147-89-CBC")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("SignVerifyGOST34.11-94-HMAC")]
-[assembly: AssemblyCopyright("Copyright ©  2019")]
+[assembly: AssemblyProduct("EncDecGOST28147-89-CBC")]
+[assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("037651ef-925b-411e-9171-2368c0ed1133")]
+[assembly: Guid("5c1e71ab-ec8b-4b96-b732-9cd869f80822")]
 
 // Version information for an assembly consists of the following four values:
 //
