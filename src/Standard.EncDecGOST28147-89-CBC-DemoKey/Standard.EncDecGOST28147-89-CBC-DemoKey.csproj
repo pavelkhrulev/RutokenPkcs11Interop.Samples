@@ -4,12 +4,12 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{037651EF-925B-411E-9171-2368C0ED1133}</ProjectGuid>
+    <ProjectGuid>{5C1E71AB-EC8B-4B96-B732-9CD869F80822}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SignVerifyGOST34._11_94_HMAC</RootNamespace>
-    <AssemblyName>SignVerifyGOST34._11_94_HMAC</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <RootNamespace>Standard.EncDecGOST28147_89_CBC_DemoKey</RootNamespace>
+    <AssemblyName>EncDecGOST28147-89-CBC</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
@@ -33,6 +33,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Pkcs11Interop, Version=3.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Pkcs11Interop.3.3.0\lib\net45\Pkcs11Interop.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="RutokenPkcs11Interop, Version=1.2.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Aktiv.RutokenPkcs11Interop.1.2.1\lib\net45\RutokenPkcs11Interop.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -43,11 +51,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="EncDecGOST28147-89-CBC-DemoKey.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RutokenPkcs11Interop.Samples.Common\RutokenPkcs11Interop.Samples.Common.csproj">
+      <Project>{03c8c426-55a4-4d09-b356-b8a78e54ed76}</Project>
+      <Name>RutokenPkcs11Interop.Samples.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -21,7 +21,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Standard.DeleteRSA", "Stand
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Standard.EncDecGOST28147-89", "Standard.EncDecGOST28147-89\Standard.EncDecGOST28147-89.csproj", "{A3FB4188-01BB-45A6-9700-5545BB1923B1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Standard.EncDecGOST28147-89-CBC", "Standard.EncDecGOST28147-89-CBC\Standard.EncDecGOST28147-89-CBC.csproj", "{5C1E71AB-EC8B-4B96-B732-9CD869F80822}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Standard.EncDecGOST28147-89-CBC-DemoKey", "Standard.EncDecGOST28147-89-CBC-DemoKey\Standard.EncDecGOST28147-89-CBC-DemoKey.csproj", "{5C1E71AB-EC8B-4B96-B732-9CD869F80822}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Standard.EncDecGOST28147-89-Stream", "Standard.EncDecGOST28147-89-Stream\Standard.EncDecGOST28147-89-Stream.csproj", "{E3DE1E62-3C0A-4C45-AC18-1DA7CDBD84FE}"
 EndProject
@@ -74,6 +74,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Standard.VKO-GOST34.10-2012-256", "Standard.VKO-GOST34.10-2012-256\Standard.VKO-GOST34.10-2012-256.csproj", "{AB9C8141-2C17-4384-9DF0-620C01A93B9A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Standard.SignVerifyGOST28147-89-MAC", "Standard.SignVerifyGOST28147-89-MAC\Standard.SignVerifyGOST28147-89-MAC.csproj", "{1B53B13B-5AD5-4F6F-AD20-F2A4BAAFD8C9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Standard.EncDecGOST28147-89-CBC", "Standard.EncDecGOST28147-89-CBC\Standard.EncDecGOST28147-89-CBC.csproj", "{17B3BF3C-EDBB-44B6-9ACA-A96E8A9C9015}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -225,6 +227,10 @@ Global
 		{1B53B13B-5AD5-4F6F-AD20-F2A4BAAFD8C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B53B13B-5AD5-4F6F-AD20-F2A4BAAFD8C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1B53B13B-5AD5-4F6F-AD20-F2A4BAAFD8C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17B3BF3C-EDBB-44B6-9ACA-A96E8A9C9015}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17B3BF3C-EDBB-44B6-9ACA-A96E8A9C9015}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17B3BF3C-EDBB-44B6-9ACA-A96E8A9C9015}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17B3BF3C-EDBB-44B6-9ACA-A96E8A9C9015}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

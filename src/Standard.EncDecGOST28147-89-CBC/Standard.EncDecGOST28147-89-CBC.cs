@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.HighLevelAPI;
 using RutokenPkcs11Interop;
@@ -8,7 +9,7 @@ using RutokenPkcs11Interop.Common;
 using RutokenPkcs11Interop.Helpers;
 using RutokenPkcs11Interop.Samples.Common;
 
-namespace EncDecGOST28147_89_CBC
+namespace Standard.EncDecGOST28147_89_CBC
 {
     /*************************************************************************
     * Rutoken                                                                *
@@ -20,17 +21,39 @@ namespace EncDecGOST28147_89_CBC
     * Использование команд шифрования/расшифрования на ключе ГОСТ 28147-89:  *
     *  - установление соединения с Рутокен в первом доступном слоте;         *
     *  - выполнение аутентификации Пользователя;                             *
-    *  - шифрование сообщения на демонстрационном ключе (одним блоком);      *
-    *  - расшифрование зашифрованнного сообщения на демонстрационном ключе;  *
+    *  - шифрование сообщения на импортированном ключе (одним блоком);       *
+    *  - расшифрование зашифрованнного сообщения на импортированном ключе;   *
     *  - сброс прав доступа Пользователя на Рутокен и закрытие соединения    *
     *    с Рутокен.                                                          *
     *------------------------------------------------------------------------*
-    * Пример использует объекты, созданные в памяти Рутокен примером         *
-    * CreateGOST28147-89.                                                    *
+    * Данный пример является самодостаточным.                                *
     *************************************************************************/
 
     class EncDecGOST28147_89_CBC
     {
+        // Шаблон для импорта симметричного ключа ГОСТ 28147-89
+        static readonly List<ObjectAttribute> ImportKeyAttributes = new List<ObjectAttribute>
+        {
+            // Метка ключа
+            new ObjectAttribute(CKA.CKA_LABEL, SampleConstants.DerivedKeyLabel),
+            // Класс - секретный ключ
+            new ObjectAttribute(CKA.CKA_CLASS, CKO.CKO_SECRET_KEY),
+            // Тип ключа - ГОСТ 28147-89
+            new ObjectAttribute(CKA.CKA_KEY_TYPE, (uint) Extended_CKK.CKK_GOST28147),
+            // Ключ является объектом сессии
+            new ObjectAttribute(CKA.CKA_TOKEN, false),
+            // Ключ может быть изменен после создания
+            new ObjectAttribute(CKA.CKA_MODIFIABLE, true),
+            // Ключ доступен только после аутентификации на токене
+            new ObjectAttribute(CKA.CKA_PRIVATE, true),
+            // Ключ может быть извлечен в зашифрованном виде
+            new ObjectAttribute(CKA.CKA_EXTRACTABLE, true),
+            // Ключ может быть извлечен в открытом виде
+            new ObjectAttribute(CKA.CKA_SENSITIVE, false),
+            // Значение секретного ключа
+            new ObjectAttribute(CKA.CKA_VALUE, SampleData.ImportSecretKey)
+        };
+
         // Шаблон для поиска симметричного ключа ГОСТ 28147-89
         static readonly List<ObjectAttribute> SymmetricKeyAttributes = new List<ObjectAttribute>
         {
@@ -65,12 +88,12 @@ namespace EncDecGOST28147_89_CBC
                         try
                         {
                             // Получить данные для шифрования
-                            byte[] sourceData = SampleData.Encrypt_Gost28147_89_CBC_SourceData;
+                            byte[] sourceData = Enumerable.Repeat((byte)0xff, 2421).ToArray();
 
                             // Получить ключ для шифрования
-                            Console.WriteLine("Getting secret key...");
-                            List<ObjectHandle> keys = session.FindAllObjects(SymmetricKeyAttributes);
-                            Errors.Check("No keys found", keys.Count > 0);
+                            //Console.WriteLine("Getting secret key...");
+                            //List<ObjectHandle> keys = session.FindAllObjects(SymmetricKeyAttributes);
+                            //Errors.Check("No keys found", keys.Count > 0);
 
                             // Выполнить дополнение данных по ISO 10126
                             byte[] dataWithPadding = ISO_10126_Padding.Pad(sourceData, SampleConstants.Gost28147_89_BlockSize);
@@ -83,6 +106,15 @@ namespace EncDecGOST28147_89_CBC
                             Buffer.BlockCopy(initVector, 0, round, 0, initVector.Length);
 
                             Console.WriteLine("Encrypting...");
+
+                            // Импорт секретного ключа
+                            // Реализация режима CBC c учетом RFC4357 на основе режима ECB
+                            // возможна только для импортированных ключей
+                            Console.WriteLine(" Import secret key...");
+                            var secretKeyHandle = session.CreateObject(ImportKeyAttributes);
+
+
+
                             byte[] encryptedData;
                             using (var ms = new MemoryStream())
                             {
@@ -91,13 +123,37 @@ namespace EncDecGOST28147_89_CBC
 
                                 for (var i = 0; i < dataWithPadding.Length / SampleConstants.Gost28147_89_BlockSize; i++)
                                 {
+                                    // Усложнение ключа по RFC 4357 через каждые 1024 байт открытого текста
+                                    // (Совместимость с режимом КриптоПро CSP - CRYPT_MODE_CBCRFC4357)
+                                    if (i % 128 == 0 && i != 0)
+                                    {
+                                        Console.WriteLine(" Key meshing...");
+                                        Console.WriteLine("  Key meshing (set key)");
+
+                                        byte[] keyBlobForMeshing = session.Decrypt(mechanism, secretKeyHandle, SampleData.CryptoProKeyMeshingConstant);
+                                        var attributes = new List<ObjectAttribute>
+                                        {
+                                            new ObjectAttribute(CKA.CKA_VALUE, keyBlobForMeshing)
+                                        };
+                                        session.SetAttributeValue(secretKeyHandle, attributes);
+
+                                        // Для алгоритма ГОСТ 28147 механизм усложнения ключа предусматривает
+                                        // преобразование синхропосылки через каждый килобайт данных.
+
+                                        // Для совместимости с КриптоПро CSP при использовании режима
+                                        // CRYPT_MODE_CBC закомментировать следующие 2 строки кода
+                                        // (выбранный режим не осуществляет это преобразование)
+                                        Console.WriteLine("  Key meshing (set IV)");
+                                        round = session.Encrypt(mechanism, secretKeyHandle, round);
+                                    }
+
                                     byte[] currentData = new byte[SampleConstants.Gost28147_89_BlockSize];
                                     Buffer.BlockCopy(dataWithPadding, i * SampleConstants.Gost28147_89_BlockSize,
                                         currentData, 0, currentData.Length);
                                     byte[] block = round.Xor(currentData);
 
                                     // Получение зашифрованного блока данных
-                                    byte[] encryptedBlock = session.Encrypt(mechanism, keys[0], block);
+                                    byte[] encryptedBlock = session.Encrypt(mechanism, secretKeyHandle, block);
 
                                     Buffer.BlockCopy(encryptedBlock, 0, round, 0, encryptedBlock.Length);
                                     ms.Write(encryptedBlock, 0, encryptedBlock.Length);
@@ -106,6 +162,14 @@ namespace EncDecGOST28147_89_CBC
                                 encryptedData = ms.ToArray();
                             }
 
+                            // Установить секретный ключ в начальное состояние
+                            Console.WriteLine(" Set default key value...");
+                            var defaultSecreyKeyValueAttribute = new List<ObjectAttribute>
+                            {
+                                new ObjectAttribute(CKA.CKA_VALUE, SampleData.ImportSecretKey)
+                            };
+                            session.SetAttributeValue(secretKeyHandle, defaultSecreyKeyValueAttribute);
+
                             // Распечатать буфер, содержащий зашифрованные данные
                             Console.WriteLine(" Encrypting buffer is:");
                             Helpers.PrintByteArray(encryptedData);
@@ -113,6 +177,10 @@ namespace EncDecGOST28147_89_CBC
 
                             // Расшифровать данные
                             Console.WriteLine("Decrypting...");
+
+                            Console.WriteLine(" Getting secret key...");
+                            List<ObjectHandle> keys = session.FindAllObjects(SymmetricKeyAttributes);
+                            Errors.Check("No keys found", keys.Count > 0);
 
                             round = new byte[SampleConstants.Gost28147_89_BlockSize];
                             Buffer.BlockCopy(initVector, 0, round, 0, initVector.Length);
@@ -124,6 +192,28 @@ namespace EncDecGOST28147_89_CBC
 
                                 for (var i = 0; i < encryptedData.Length / SampleConstants.Gost28147_89_BlockSize; i++)
                                 {
+                                    if (i % 128 == 0 && i != 0)
+                                    {
+                                        Console.WriteLine(" Key meshing...");
+                                        Console.WriteLine("  Key meshing (set key)");
+
+                                        byte[] keyBlobForMeshing = session.Decrypt(mechanism, secretKeyHandle, SampleData.CryptoProKeyMeshingConstant);
+                                        var attributes = new List<ObjectAttribute>
+                                        {
+                                            new ObjectAttribute(CKA.CKA_VALUE, keyBlobForMeshing)
+                                        };
+                                        session.SetAttributeValue(secretKeyHandle, attributes);
+
+                                        // Для алгоритма ГОСТ 28147 механизм усложнения ключа предусматривает
+                                        // преобразование синхропосылки через каждый килобайт данных.
+
+                                        // Для совместимости с КриптоПро CSP при использовании режима
+                                        // CRYPT_MODE_CBC закомментировать следующие 2 строки кода
+                                        // (выбранный режим не осуществляет это преобразование)
+                                        Console.WriteLine("  Key meshing (set IV)");
+                                        round = session.Encrypt(mechanism, secretKeyHandle, round);
+                                    }
+
                                     byte[] currentData = new byte[SampleConstants.Gost28147_89_BlockSize];
                                     Buffer.BlockCopy(encryptedData, i * SampleConstants.Gost28147_89_BlockSize,
                                         currentData, 0, currentData.Length);
@@ -140,6 +230,10 @@ namespace EncDecGOST28147_89_CBC
                                 // Снимаем дополнение данных
                                 decryptedData = ISO_10126_Padding.Unpad(ms.ToArray());
                             }
+
+                            // Установить секретный ключ в начальное состояние
+                            Console.WriteLine(" Set default key value...");
+                            session.SetAttributeValue(secretKeyHandle, defaultSecreyKeyValueAttribute);
 
                             // Распечатать буфер, содержащий расшифрованные данные
                             Console.WriteLine(" Decrypted buffer is:");
