@@ -34,10 +34,12 @@ namespace Standard.EncDecGOST28147_89_CBC
         // Шаблон для импорта симметричного ключа ГОСТ 28147-89
         static readonly List<ObjectAttribute> ImportKeyAttributes = new List<ObjectAttribute>
         {
-            // Метка ключа
-            new ObjectAttribute(CKA.CKA_LABEL, SampleConstants.DerivedKeyLabel),
             // Класс - секретный ключ
             new ObjectAttribute(CKA.CKA_CLASS, CKO.CKO_SECRET_KEY),
+            // Метка ключа
+            new ObjectAttribute(CKA.CKA_LABEL, SampleConstants.GostSecretKeyLabel),
+            // Идентификатор ключа
+            new ObjectAttribute(CKA.CKA_ID, SampleConstants.GostSecretKeyId),
             // Тип ключа - ГОСТ 28147-89
             new ObjectAttribute(CKA.CKA_KEY_TYPE, (uint) Extended_CKK.CKK_GOST28147),
             // Ключ является объектом сессии
@@ -88,17 +90,14 @@ namespace Standard.EncDecGOST28147_89_CBC
                         try
                         {
                             // Получить данные для шифрования
-                            byte[] sourceData = Enumerable.Repeat((byte)0xff, 2421).ToArray();
-
-                            // Получить ключ для шифрования
-                            //Console.WriteLine("Getting secret key...");
-                            //List<ObjectHandle> keys = session.FindAllObjects(SymmetricKeyAttributes);
-                            //Errors.Check("No keys found", keys.Count > 0);
+                            byte[] sourceData = Enumerable.Repeat((byte)0xff, 2421).ToArray();                            
 
                             // Выполнить дополнение данных по ISO 10126
+                            Console.WriteLine("Fill in padding...");
                             byte[] dataWithPadding = ISO_10126_Padding.Pad(sourceData, SampleConstants.Gost28147_89_BlockSize);
 
                             // Получить синхропосылку
+                            Console.WriteLine("Fill in IV...");
                             var random = new Random();
                             byte[] initVector = new byte[SampleConstants.Gost28147_89_BlockSize];
                             random.NextBytes(initVector);
@@ -112,8 +111,6 @@ namespace Standard.EncDecGOST28147_89_CBC
                             // возможна только для импортированных ключей
                             Console.WriteLine(" Import secret key...");
                             var secretKeyHandle = session.CreateObject(ImportKeyAttributes);
-
-
 
                             byte[] encryptedData;
                             using (var ms = new MemoryStream())
