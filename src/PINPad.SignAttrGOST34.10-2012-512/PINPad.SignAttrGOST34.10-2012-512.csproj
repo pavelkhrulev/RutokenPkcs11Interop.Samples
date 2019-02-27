@@ -7,7 +7,7 @@
     <ProjectGuid>{1B3ACDC9-6CE0-469E-B6E5-362A0FB7AC87}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PINPad.SignAttrGOST34._10_2012</RootNamespace>
+    <RootNamespace>PINPad.SignAttrGOST3410_2012_512</RootNamespace>
     <AssemblyName>PINPad.SignAttrGOST34.10-2012</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -51,7 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SignAttrGOST34.10-2012.cs" />
+    <Compile Include="SignAttrGOST34.10-2012-512.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

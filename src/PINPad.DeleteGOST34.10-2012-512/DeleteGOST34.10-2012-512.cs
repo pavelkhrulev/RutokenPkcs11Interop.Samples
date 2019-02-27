@@ -6,11 +6,11 @@ using RutokenPkcs11Interop;
 using RutokenPkcs11Interop.Common;
 using RutokenPkcs11Interop.Samples.Common;
 
-namespace PINPad.DeleteGOST3410_2012
+namespace PINPad.DeleteGOST3410_2012_512
 {
     /*************************************************************************
     * Rutoken                                                                *
-    * Copyright (c) 2003-2017, CJSC Aktiv-Soft. All rights reserved.         *
+    * Copyright (c) 2003-2019, CJSC Aktiv-Soft. All rights reserved.         *
     * Подробная информация:  http://www.rutoken.ru                           *
     *------------------------------------------------------------------------*
     * Пример работы с Рутокен при помощи библиотеки PKCS#11 на языке C#      *
@@ -22,17 +22,18 @@ namespace PINPad.DeleteGOST3410_2012
     *  - сброс прав доступа Пользователя на Рутокен и закрытие соединения    *
     *    с Рутокен.                                                          *
     *------------------------------------------------------------------------*
-    * Пример удаляет ключи, созданные примером CreateGOST34.10-2012-PINPad   *
+    * Пример удаляет ключи, созданные примером                               *
+    * PINPad.CreateGOST34.10-2012-512                                        *
     *************************************************************************/
 
-    class DeleteGOST3410_2012
+    class DeleteGOST3410_2012_512
     {
         // Шаблон для поиска ключевой пары ГОСТ Р 34.10-2012(512)
         static readonly List<ObjectAttribute> KeyPairAttributes = new List<ObjectAttribute>()
         {
             // Критерий поиска - идентификатор ключевой пары
             new ObjectAttribute(CKA.CKA_ID, SampleConstants.Gost512KeyPairId1),
-            // Критерий поиска - ключи ГОСТ Р 34.10-2012
+            // Критерий поиска - ключи ГОСТ Р 34.10-2012(512)
             new ObjectAttribute(CKA.CKA_KEY_TYPE, (uint) Extended_CKK.CKK_GOSTR3410_512)
         };
 

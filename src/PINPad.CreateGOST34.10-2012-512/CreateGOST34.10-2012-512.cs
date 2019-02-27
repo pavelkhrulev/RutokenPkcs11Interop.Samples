@@ -7,11 +7,11 @@ using RutokenPkcs11Interop.Common;
 using RutokenPkcs11Interop.HighLevelAPI;
 using RutokenPkcs11Interop.Samples.Common;
 
-namespace PINPad.CreateGOST3410_2012
+namespace PINPad.CreateGOST3410_2012_512
 {
     /*************************************************************************
     * Rutoken                                                                *
-    * Copyright (c) 2003-2017, CJSC Aktiv-Soft. All rights reserved.         *
+    * Copyright (c) 2003-2019, CJSC Aktiv-Soft. All rights reserved.         *
     * Подробная информация:  http://www.rutoken.ru                           *
     *------------------------------------------------------------------------*
     * Пример работы с Рутокен PINPad при помощи библиотеки PKCS#11           *
@@ -21,8 +21,9 @@ namespace PINPad.CreateGOST3410_2012
     *  - установление соединения с Рутокен PINPad в первом доступном слоте;  *
     *  - определение модели подключенного устройства;                        *
     *  - выполнение аутентификации Пользователя;                             *
-    *  - создание ключевой пары ГОСТ Р 34.10-2012(512) с атрибутами          *
-    *    подтверждения подписи данных и вводом PIN-кода на экране PINPad;    *
+    *  - создание ключевой пары ГОСТ Р 34.10-2012 с длиной закрытого ключа   *
+    *    512 бит с атрибутами подтверждения подписи данных                   *
+    *    и вводом PIN-кода на экране PINPad;                                 *
     *  - сброс прав доступа Пользователя на Рутокен PINPad и закрытие        *
     *    соединения с Рутокен PINPad.                                        *
     *------------------------------------------------------------------------*
@@ -30,7 +31,7 @@ namespace PINPad.CreateGOST3410_2012
     * работы с библиотекой PKCS#11.                                          *
     *************************************************************************/
 
-    class CreateGOST3410_2012
+    class CreateGOST3410_2012_512
     {
         // Шаблон для создания открытого ключа ГОСТ Р 34.10-2012(512)
         static readonly List<ObjectAttribute> PublicKeyAttributes = new List<ObjectAttribute>
@@ -41,15 +42,15 @@ namespace PINPad.CreateGOST3410_2012
             new ObjectAttribute(CKA.CKA_LABEL, SampleConstants.Gost512PublicKeyLabel1),
             // Идентификатор ключевой пары (должен совпадать у открытого и закрытого ключей)
             new ObjectAttribute(CKA.CKA_ID, SampleConstants.Gost512KeyPairId1),
-            // Тип ключа ГОСТ Р 34.10-2012
+            // Тип ключа ГОСТ Р 34.10-2012(512)
             new ObjectAttribute(CKA.CKA_KEY_TYPE, (uint) Extended_CKK.CKK_GOSTR3410_512),
             // Ключ является объектом токена
             new ObjectAttribute(CKA.CKA_TOKEN, true),
             // Ключ доступен без аутентификации
             new ObjectAttribute(CKA.CKA_PRIVATE, false),
-            // Параметры алгоритма ГОСТ Р 34.10-2012
+            // Параметры алгоритма ГОСТ Р 34.10-2012(512)
             new ObjectAttribute((uint) Extended_CKA.CKA_GOSTR3410_PARAMS, SampleConstants.GostR3410_512_Parameters),
-            // Параметры алгоритма ГОСТ Р 34.11-2012
+            // Параметры алгоритма ГОСТ Р 34.11-2012(512)
             new ObjectAttribute((uint) Extended_CKA.CKA_GOSTR3411_PARAMS, SampleConstants.GostR3411_512_Parameters)
         };
 
@@ -62,7 +63,7 @@ namespace PINPad.CreateGOST3410_2012
             new ObjectAttribute(CKA.CKA_LABEL, SampleConstants.Gost512PrivateKeyLabel1),
             // Идентификатор ключевой пары (должен совпадать у открытого и закрытого ключей)
             new ObjectAttribute(CKA.CKA_ID, SampleConstants.Gost512KeyPairId1),
-            // Тип ключа ГОСТ Р 34.10-2012
+            // Тип ключа ГОСТ Р 34.10-2012(512)
             new ObjectAttribute(CKA.CKA_KEY_TYPE, (uint) Extended_CKK.CKK_GOSTR3410_512),
             // Ключ является объектом токена
             new ObjectAttribute(CKA.CKA_TOKEN, true),
@@ -72,9 +73,9 @@ namespace PINPad.CreateGOST3410_2012
             new ObjectAttribute((uint) Extended_CKA.CKA_VENDOR_KEY_CONFIRM_OP, true),
             // Операция подписи требует ввода PIN-кода на PINPad
             new ObjectAttribute((uint) Extended_CKA.CKA_VENDOR_KEY_PIN_ENTER, true),
-            // Параметры алгоритма ГОСТ Р 34.10-2012
+            // Параметры алгоритма ГОСТ Р 34.10-2012(512)
             new ObjectAttribute((uint) Extended_CKA.CKA_GOSTR3410_PARAMS, SampleConstants.GostR3410_512_Parameters),
-            // Параметры алгоритма ГОСТ Р 34.11-2012
+            // Параметры алгоритма ГОСТ Р 34.11-2012(512)
             new ObjectAttribute((uint) Extended_CKA.CKA_GOSTR3411_PARAMS, SampleConstants.GostR3411_512_Parameters)
         };
 
@@ -116,10 +117,10 @@ namespace PINPad.CreateGOST3410_2012
                         try
                         {
                             // Определить механизм генерации ключа
-                            Console.WriteLine("Generating GOST R 34.10-2012 key pair...");
+                            Console.WriteLine("Generating GOST R 34.10-2012(512) key pair...");
                             var mechanism = new Mechanism((uint)Extended_CKM.CKM_GOSTR3410_512_KEY_PAIR_GEN);
 
-                            // Сгенерировать первую ключевую пару ГОСТ Р 34.10-2001
+                            // Сгенерировать ключевую пару ГОСТ Р 34.10-2012(512)
                             ObjectHandle publicKeyHandle;
                             ObjectHandle privateKeyHandle;
                             session.GenerateKeyPair(mechanism, PublicKeyAttributes, PrivateKeyAttributes, out publicKeyHandle, out privateKeyHandle);
