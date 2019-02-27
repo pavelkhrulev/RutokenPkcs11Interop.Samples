@@ -64,7 +64,7 @@ namespace PINPad.Journal
             // Ключ предназначен для проверки цифровой подписи журнала
             new ObjectAttribute((uint)Extended_CKA.CKA_VENDOR_KEY_JOURNAL, true),
             // Операции с ключом не требуют подтверждения на экране Рутокен PINPad
-            new ObjectAttribute((uint)Extended_CKA.CKA_VENDOR_KEY_CONFIRM_OP, true)
+            new ObjectAttribute((uint)Extended_CKA.CKA_VENDOR_KEY_CONFIRM_OP, false)
         };
 
         // Шаблон для поиска открытого ключа ГОСТ Р 34.10-2001 для проверки
