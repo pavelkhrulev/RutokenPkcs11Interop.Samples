@@ -11,7 +11,7 @@ namespace Extended.ManageFlash
 {
     /*************************************************************************
     * Rutoken                                                                *
-    * Copyright (c) 2003-2017, CJSC Aktiv-Soft. All rights reserved.         *
+    * Copyright (c) 2003-2019, CJSC Aktiv-Soft. All rights reserved.         *
     * Подробная информация:  http://www.rutoken.ru                           *
     *------------------------------------------------------------------------*
     * Пример работы с Рутокен ЭЦП Flash при помощи библиотеки PKCS#11        *
