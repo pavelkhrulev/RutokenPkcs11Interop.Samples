@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{7AC31FF3-5BE3-4094-A867-AA1C16FFA4AC}</ProjectGuid>
+    <ProjectGuid>{A507684B-68C4-4ABD-AA02-281BA460078B}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PINPad.SignGOST34._10_2012</RootNamespace>
-    <AssemblyName>PINPad.SignGOST34.10-2012</AssemblyName>
+    <RootNamespace>PINPad.CreateGOST3410_2012_512</RootNamespace>
+    <AssemblyName>PINPad.CreateGOST34.10-2012</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -51,7 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SignGOST34.10-2012.cs" />
+    <Compile Include="CreateGOST34.10-2012-512.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -7,29 +7,27 @@ using RutokenPkcs11Interop.Common;
 using RutokenPkcs11Interop.HighLevelAPI;
 using RutokenPkcs11Interop.Samples.Common;
 
-namespace PINPad.SignGOST3410_2012
+namespace PINPad.SignAttrGOST3410_2012_512
 {
     /*************************************************************************
     * Rutoken                                                                *
-    * Copyright (c) 2003-2017, CJSC Aktiv-Soft. All rights reserved.         *
+    * Copyright (c) 2003-2019, CJSC Aktiv-Soft. All rights reserved.         *
     * Подробная информация:  http://www.rutoken.ru                           *
     *------------------------------------------------------------------------*
     * Пример работы с Рутокен PINPad при помощи библиотеки PKCS#11           *
     * на языке C#                                                            *
     *------------------------------------------------------------------------*
     * Использование команд вычисления/проверки ЭП на ключах                  *
-    * ГОСТ Р 34.10-2012 (512):                                               *
+    * ГОСТ Р 34.10-2012 с длиной закрытого ключа 512 бит:                    *
     *  - установление соединения с Рутокен PINPad в первом доступном слоте;  *
-    *  - выполнение аутентификации Пользователя;                             *
-    *  - подпись отображаемых платежных данных на экране PINPad;             *
+    *  - выполнение аутентификации c правами Пользователя;                   *
+    *  - подпись отображаемых платежных данных с атрибутами на экране PINPad;*
     *  - проверка подписи;                                                   *
-    *  - подпись запроса на сертификат для ключевой пары;                    *
-    *  - проверка подписи запроса на сертификат;                             *
     *  - сброс прав доступа Пользователя на Рутокен PINPad и закрытие        *
     *    соединения с Рутокен PINPad.                                        *
     *------------------------------------------------------------------------*
     * Пример использует объекты, созданные в памяти Рутокен PINPad примером  *
-    * CreateGOST34.10-2012-PINPad.                                           *
+    * PINPad.CreateGOST34.10-2012-512.                                       *
     *************************************************************************/
 
     /* Формат сообщения, распознаваемого PINPad:
@@ -42,10 +40,10 @@ namespace PINPad.SignGOST3410_2012
     <T>some text                 // информационное поле - текст будет отображен на всей строке на экране PINPad
     */
 
-    class SignGOST3410_2012
+    class SignAttrGOST3410_2012_512
     {
         // Шаблон для поиска открытого ключа ГОСТ Р 34.10-2012(512)
-        static readonly List<ObjectAttribute> PublicKeyAttributes = new List<ObjectAttribute>
+        static readonly List<ObjectAttribute> PublicKeyAttributes = new List<ObjectAttribute>()
         {
             // ID пары
             new ObjectAttribute(CKA.CKA_ID, SampleConstants.Gost512KeyPairId1),
@@ -56,7 +54,7 @@ namespace PINPad.SignGOST3410_2012
         };
 
         // Шаблон для поиска закрытого ключа ГОСТ Р 34.10-2012(512)
-        static readonly List<ObjectAttribute> PrivateKeyAttributes = new List<ObjectAttribute>
+        static readonly List<ObjectAttribute> PrivateKeyAttributes = new List<ObjectAttribute>()
         {
             // ID пары
             new ObjectAttribute(CKA.CKA_ID, SampleConstants.Gost512KeyPairId1),
@@ -115,12 +113,24 @@ namespace PINPad.SignGOST3410_2012
                             var mechanism = new Mechanism((uint)Extended_CKM.CKM_GOSTR3411_12_512);
 
                             // Вычислить хэш-код данных
-                            Console.WriteLine("Hashing data...");
+                            Console.WriteLine("Hashing data without attributes...");
                             byte[] hash = session.Digest(mechanism, ConvertUtils.Utf8StringToBytes(sourceData));
 
                             // Распечатать буфер, содержащий хэш-код
                             Console.WriteLine(" Hashed buffer is:");
                             Helpers.PrintByteArray(hash);
+                            Console.WriteLine("Hashing has been completed successfully");
+
+                            // Вычислить хэш-код данных
+                            Console.WriteLine("Hashing data with attributes...");
+                            byte[] attrData = SampleData.PINPad_AttrData2;
+                            var hashOffset = 77;
+                            Buffer.BlockCopy(hash, 0, attrData, hashOffset, hash.Length);
+                            byte[] attrHash = session.Digest(mechanism, attrData);
+
+                            // Распечатать буфер, содержащий хэш-код
+                            Console.WriteLine(" Hashed buffer is:");
+                            Helpers.PrintByteArray(attrHash);
                             Console.WriteLine("Hashing has been completed successfully");
 
                             // Получить значение флага подтверждения операции подписи
@@ -160,12 +170,12 @@ namespace PINPad.SignGOST3410_2012
                             if (isOperationInvisible)
                             {
                                 Console.WriteLine("Signing data invisible...");
-                                signature = session.SignInvisible(signMechanism, privateKeys[0], hash);
+                                signature = session.SignInvisible(signMechanism, privateKeys[0], attrHash);
                             }
                             else
                             {
                                 Console.WriteLine("Signing data...");
-                                signature = session.Sign(signMechanism, privateKeys[0], hash);
+                                signature = session.Sign(signMechanism, privateKeys[0], attrHash);
                             }
 
                             // Распечатать буфер, содержащий подпись
@@ -178,78 +188,10 @@ namespace PINPad.SignGOST3410_2012
                             List<ObjectHandle> publicKeys = session.FindAllObjects(PublicKeyAttributes);
                             Errors.Check("No public keys found", publicKeys.Count > 0);
 
-                            // Проверка подписи для данных
+                            // Проверка подписи для данных по ГОСТ Р 34.10-2012(512)
                             Console.WriteLine("Verifying signature...");
                             bool isSignatureValid = false;
-                            session.Verify(signMechanism, publicKeys[0], hash, signature, out isSignatureValid);
-
-                            if (isSignatureValid)
-                                Console.WriteLine("Verifying has been completed successfully");
-                            else
-                                throw new InvalidOperationException("Invalid signature");
-
-                            // Выполнить подпись запроса на сертификат по алгоритму ГОСТ Р 34.10-2012(512)
-                            Console.WriteLine("Signing certificate request...");
-
-                            // Получить значение открытого ключа
-                            Console.WriteLine(" Getting public key value");
-                            attributes = new List<CKA>
-                            {
-                                CKA.CKA_VALUE
-                            };
-                            List<ObjectAttribute> publicKeyValues = session.GetAttributeValue(publicKeys[0], attributes);
-                            byte[] publicKeyValue = publicKeyValues[0].GetValueAsByteArray();
-
-                            // Распечатать буфер, содержащий открытый ключ
-                            Console.WriteLine("  Public key:");
-                            Helpers.PrintByteArray(publicKeyValue);
-
-                            // Внести значение открытого ключа в запрос на сертификат
-                            byte[] certificateRequest = SampleData.PINPad_Certificate_Request2;
-                            const int publicKeyValueOffset = 69; // Смещение значения открытого ключа в запросе
-                            for (var i = 0; i < publicKeyValue.Length; i++)
-                            {
-                                certificateRequest[i + publicKeyValueOffset] = publicKeyValue[i];
-                            }
-
-                            // Сформировать хэш-код от запроса на сертификат
-                            Console.WriteLine(" Hashing data...");
-                            byte[] certificateRequestHash = session.Digest(mechanism, certificateRequest);
-
-                            // Распечатать буфер, содержащий хэш-код
-                            Console.WriteLine(" Hashed buffer is:");
-                            Helpers.PrintByteArray(certificateRequestHash);
-                            Console.WriteLine("Hashing has been completed successfully");
-
-                            /*************************************************************************
-                            * Инициализировать операцию подписи данных                              *
-                            ************************************************************************/
-                            /*************************************************************************
-                            * Для подписи запроса на сертификат в зависимости от атрибута ключа      *
-                            * CKA_VENDOR_KEY_CONFIRM_OP используются функции C_EX_SignInvisibleInit  *
-                            * и C_EX_SignInvisible (для значения CK_FALSE), либо C_SignInit и C_Sign *
-                            * (для значения CK_TRUE)                                                 *
-                            *************************************************************************/
-                            if (confirm[0].GetValueAsBool())
-                            {
-                                Console.WriteLine(" Signing data...");
-                                signature = session.Sign(signMechanism, privateKeys[0], certificateRequestHash);
-                            }
-                            else
-                            {
-                                Console.WriteLine(" Signing data invisible...");
-                                signature = session.SignInvisible(signMechanism, privateKeys[0], certificateRequestHash);
-                            }
-
-                            // Распечатать буфер, содержащий подпись
-                            Console.WriteLine(" Signature buffer is:");
-                            Helpers.PrintByteArray(signature);
-                            Console.WriteLine("Data has been signed successfully");
-
-                            // Выполнить проверку подписи данных по алгоритму ГОСТ Р 34.10-2012(512)
-                            Console.WriteLine("Verifying signature...");
-                            isSignatureValid = false;
-                            session.Verify(signMechanism, publicKeys[0], certificateRequestHash, signature, out isSignatureValid);
+                            session.Verify(signMechanism, publicKeys[0], attrHash, signature, out isSignatureValid);
 
                             if (isSignatureValid)
                                 Console.WriteLine("Verifying has been completed successfully");

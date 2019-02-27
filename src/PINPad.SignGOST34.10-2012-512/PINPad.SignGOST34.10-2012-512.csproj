@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A98C00E0-156A-42CF-B522-A0682F4249A1}</ProjectGuid>
+    <ProjectGuid>{7AC31FF3-5BE3-4094-A867-AA1C16FFA4AC}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PINPad.DeleteGOST34._10_2012</RootNamespace>
-    <AssemblyName>PINPad.DeleteGOST34.10-2012</AssemblyName>
+    <RootNamespace>PINPad.SignGOST3410_2012_512</RootNamespace>
+    <AssemblyName>PINPad.SignGOST34.10-2012</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -51,7 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DeleteGOST34.10-2012.cs" />
+    <Compile Include="SignGOST34.10-2012-512.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
