@@ -1,17 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{5C1E71AB-EC8B-4B96-B732-9CD869F80822}</ProjectGuid>
+    <ProjectGuid>{17B3BF3C-EDBB-44B6-9ACA-A96E8A9C9015}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>EncDecGOST28147_89_CBC</RootNamespace>
-    <AssemblyName>EncDecGOST28147-89-CBC</AssemblyName>
+    <RootNamespace>Standard.EncDecGOST28147_89_CBC</RootNamespace>
+    <AssemblyName>Standard.EncDecGOST28147-89-CBC</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -35,11 +34,9 @@
   <ItemGroup>
     <Reference Include="Pkcs11Interop, Version=3.3.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Pkcs11Interop.3.3.0\lib\net45\Pkcs11Interop.dll</HintPath>
-      <Private>True</Private>
     </Reference>
-    <Reference Include="RutokenPkcs11Interop, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Aktiv.RutokenPkcs11Interop.1.1.1\lib\net45\RutokenPkcs11Interop.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="RutokenPkcs11Interop, Version=1.2.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Aktiv.RutokenPkcs11Interop.1.2.1\lib\net45\RutokenPkcs11Interop.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -51,7 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EncDecGOST28147-89-CBC.cs" />
+    <Compile Include="Standard.EncDecGOST28147-89-CBC.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -65,11 +62,4 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>

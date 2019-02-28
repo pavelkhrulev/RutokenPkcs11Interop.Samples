@@ -8,7 +8,7 @@ namespace InitToken
 {
     /*************************************************************************
     * Rutoken                                                                *
-    * Copyright (c) 2003-2017, CJSC Aktiv-Soft. All rights reserved.         *
+    * Copyright (c) 2003-2019, CJSC Aktiv-Soft. All rights reserved.         *
     * Подробная информация:  http://www.rutoken.ru                           *
     *------------------------------------------------------------------------*
     * Пример работы с Рутокен при помощи библиотеки PKCS#11 на языке C#      *

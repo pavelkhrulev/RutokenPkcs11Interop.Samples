@@ -10,7 +10,7 @@ namespace CreateGOST3410_2001
 {
     /*************************************************************************
     * Rutoken                                                                *
-    * Copyright (c) 2003-2017, CJSC Aktiv-Soft. All rights reserved.         *
+    * Copyright (c) 2003-2019, CJSC Aktiv-Soft. All rights reserved.         *
     * Подробная информация:  http://www.rutoken.ru                           *
     *------------------------------------------------------------------------*
     * Пример работы с Рутокен при помощи библиотеки PKCS#11 на языке C#      *
@@ -46,7 +46,9 @@ namespace CreateGOST3410_2001
             // Ключ доступен без аутентификации на токене
             new ObjectAttribute(CKA.CKA_PRIVATE, false),
             // Параметры алгоритма ГОСТ Р 34.10-2001
-            new ObjectAttribute((uint) Extended_CKA.CKA_GOSTR3410_PARAMS, SampleConstants.GostR3410Parameters)
+            new ObjectAttribute((uint) Extended_CKA.CKA_GOSTR3410_PARAMS, SampleConstants.GostR3410Parameters),
+            // Параметры алгоритма ГОСТ Р 34.11-1994
+            new ObjectAttribute((uint) Extended_CKA.CKA_GOSTR3411_PARAMS, SampleConstants.GostR3411Parameters)
         };
 
         // Шаблон для генерации закрытого ключа ГОСТ Р 34.10-2001
@@ -90,7 +92,9 @@ namespace CreateGOST3410_2001
             // Ключ доступен без аутентификации на токене
             new ObjectAttribute(CKA.CKA_PRIVATE, false),
             // Параметры алгоритма ГОСТ Р 34.10-2001
-            new ObjectAttribute((uint) Extended_CKA.CKA_GOSTR3410_PARAMS, SampleConstants.GostR3410Parameters)
+            new ObjectAttribute((uint) Extended_CKA.CKA_GOSTR3410_PARAMS, SampleConstants.GostR3410Parameters),
+            // Параметры алгоритма ГОСТ Р 34.11-1994
+            new ObjectAttribute((uint) Extended_CKA.CKA_GOSTR3411_PARAMS, SampleConstants.GostR3411Parameters)
         };
 
         // Шаблон для генерации закрытого ключа ГОСТ Р 34.10-2001
