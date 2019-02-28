@@ -7,11 +7,11 @@ using RutokenPkcs11Interop.Common;
 using RutokenPkcs11Interop.HighLevelAPI;
 using RutokenPkcs11Interop.Samples.Common;
 
-namespace PKIExtensions.CreateCSR_PKCS10
+namespace PKIExtensions.CreateCSR_PKCS10_GOST3410_2001
 {
     /*************************************************************************
     * Rutoken                                                                *
-    * Copyright (c) 2003-2017, CJSC Aktiv-Soft. All rights reserved.         *
+    * Copyright (c) 2003-2019, CJSC Aktiv-Soft. All rights reserved.         *
     * Подробная информация:  http://www.rutoken.ru                           *
     *------------------------------------------------------------------------*
     * Пример работы с Рутокен ЭЦП при помощи библиотеки PKCS#11 на языке C#  *
@@ -29,7 +29,7 @@ namespace PKIExtensions.CreateCSR_PKCS10
     * работы с библиотекой PKCS#11.                                          *
     *************************************************************************/
 
-    class CreateCSR_PKCS10
+    class CreateCSR_PKCS10_GOST3410_2001
     {
         // Шаблон для создания открытого ключа ГОСТ Р 34.10-2001
         static readonly List<ObjectAttribute> PublicKeyAttributes = new List<ObjectAttribute>
@@ -74,28 +74,38 @@ namespace PKIExtensions.CreateCSR_PKCS10
         // Список полей DN (Distinguished Name)
         static readonly string[] Dn =
         {
-            "CN",
-            "UTF8String:Иванов",
-            "C",
+            "CN",                        // Тип поля CN (Common Name)
+            "UTF8String:Иванов",         // Значение
+            "C",                         // C (Country)
             "RU",
-            "2.5.4.5",
+            "2.5.4.5",                   // SN (Serial Number)
             "12312312312",
-            "1.2.840.113549.1.9.1",
+            "1.2.840.113549.1.9.1",      // E (E-mail)
             "ivanov@mail.ru",
-            "ST",
-            "UTF8String:Москва"
+            "ST",                        // ST (State or province)
+            "UTF8String:Москва",
+            "O",                         // O (Organization)
+            "CompanyName",
+            "OU",                        // OU (Organizational Unit)
+            "Devel",
+            "L",                         // L (Locality)
+            "Moscow"
         };
 
         // Список дополнительных полей
         static readonly string[] Exts =
         {
-            "keyUsage",
+            "keyUsage",                                                               // Использование ключа
             "digitalSignature,nonRepudiation,keyEncipherment,dataEncipherment",
-            "extendedKeyUsage",
+            "extendedKeyUsage",                                                       // Дополнительное использование
             "1.2.643.2.2.34.6,1.3.6.1.5.5.7.3.2,1.3.6.1.5.5.7.3.4",
-            "2.5.29.14",
+            "2.5.29.14",                                                              // Идентификатор ключа субъекта (SKI)
             "ASN1:FORMAT:HEX,OCTETSTRING:FE117B93CEC6B5065E1613E155D3A9CA597C0F81",
-            "1.2.643.100.111",
+            "2.5.29.17",                                                              // Дополнительное имя (пример с кодированием в виде DER)
+            "DER:30:0F:81:0D:65:78:61:6d:70:6c:65:40:79:61:2E:72:75",
+            "2.5.29.32",                                                              // Политики сертификата (кодирование в виде DER с пометкой "critical")
+            "critical,DER:30:0A:30:08:06:06:2A:85:03:64:71:01",
+            "1.2.643.100.111",                                                        // Средства электронной подписи владельца
             "ASN1:UTF8String:СКЗИ \\\"Рутокен ЭЦП 2.0\\\""
         };
 

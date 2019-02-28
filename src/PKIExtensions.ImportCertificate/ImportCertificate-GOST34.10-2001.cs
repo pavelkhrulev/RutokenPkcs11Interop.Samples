@@ -7,11 +7,11 @@ using RutokenPkcs11Interop;
 using RutokenPkcs11Interop.Helpers;
 using RutokenPkcs11Interop.Samples.Common;
 
-namespace PKIExtensions.ImportCertificate
+namespace PKIExtensions.ImportCertificate_GOST3410_2001
 {
     /*************************************************************************
     * Rutoken                                                                *
-    * Copyright (c) 2003-2017, CJSC Aktiv-Soft. All rights reserved.         *
+    * Copyright (c) 2003-2019, CJSC Aktiv-Soft. All rights reserved.         *
     * Подробная информация:  http://www.rutoken.ru                           *
     *------------------------------------------------------------------------*
     * Пример работы с Рутокен ЭЦП при помощи библиотеки PKCS#11 на языке C#  *
@@ -22,12 +22,14 @@ namespace PKIExtensions.ImportCertificate
     *  - импорт сертификата на Рутокен;                                      *
     *  - сброс прав доступа Пользователя и закрытие соединения с Рутокен.    *
     *------------------------------------------------------------------------*
-    * В примере используется ключевая пара из CreateCSR-PKCS10, и необходимо *
-    * с помощью запроса из проекта CreateCSR-PKCS10 получить сертификат в    *
+    * В примере используется ключевая пара из                                *
+    * PKIExtensions.CreateCSR-PKCS10-GOST34.10-2001, и необходимо            *
+    * с помощью запроса из проекта                                           *
+    * PKIExtensions.CreateCSR-PKCS10-GOST34.10-2001 получить сертификат в    *
     * кодировке base64. Сертификат можно получить в любом УЦ.                *
     *************************************************************************/
 
-    class ImportCertificate
+    class ImportCertificate_GOST3410_2001
     {
         // Шаблон для импорта сертификата
         static readonly List<ObjectAttribute> CertificateAttributes = new List<ObjectAttribute>
