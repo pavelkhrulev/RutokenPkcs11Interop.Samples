@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{7DA1AA7E-B1BA-4990-86D7-4E4D271983BA}</ProjectGuid>
+    <ProjectGuid>{4E774DB9-7495-48EC-9278-58225423AA2E}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PKIExtensions.CreateCSR_PKCS10</RootNamespace>
-    <AssemblyName>PKIExtensions.CreateCSR-PKCS10</AssemblyName>
+    <RootNamespace>PKIExtensions.ImportCertificate_GOST3410_2001</RootNamespace>
+    <AssemblyName>PKIExtensions.ImportCertificate</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -51,7 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CreateCSR-PKCS10.cs" />
+    <Compile Include="ImportCertificate-GOST34.10-2001.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
