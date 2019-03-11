@@ -1,7 +1,10 @@
 ﻿using System;
+using System.IO;
 using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.HighLevelAPI;
 using RutokenPkcs11Interop;
+using RutokenPkcs11Interop.Common;
+using RutokenPkcs11Interop.HighLevelAPI;
 using RutokenPkcs11Interop.Samples.Common;
 
 namespace PKIExtensions.VerifyPKCS7Detached
@@ -26,10 +29,12 @@ namespace PKIExtensions.VerifyPKCS7Detached
     *------------------------------------------------------------------------*
     * Пример использует объекты, созданные в памяти примерами                *
     * PKIExtensions.ImportCertificate-GOST34.10-2001 и                       *
-    * PKIExtensions.SignPKCS7Detached-GOST34.10-2001.                        *
-    * Также необходимо предоставить сертификат УЦ, в котором был выписан     *
+    * PKIExtensions.SignPKCS7Detached-GOST34.10-2001                         *
+    * (положить в папку с exe-файлом signature.bin).                         *
+    * Также необходимо предоставить сертификат УЦ                            *
+    * (положить в папку с exe-файлом CA_cert.cer), в котором был выписан     *
     * сертификат в примере PKIExtensions.ImportCertificate-GOST34.10-2001    *
-    * в base64 или der кодировке                                             *
+    * в der кодировке                                                        *
     *************************************************************************/
 
     class VerifyPKCS7Detached
@@ -56,9 +61,32 @@ namespace PKIExtensions.VerifyPKCS7Detached
 
                         try
                         {
+                            Console.WriteLine("Reading CA certificate...");
+                            var CACertificate = File.ReadAllBytes("CA_cert.cer");
+
+                            Console.WriteLine("Reading CMS...");
+                            var cms = File.ReadAllBytes("signature.bin");
+
                             // Проверка подписи
                             Console.WriteLine("Verifying...");
-                            // TODO: реализовать функцию в библиотеке и прикрутить сюда ее вызов
+                            using (var inputStream = new MemoryStream(SampleData.PKCS7_SignDataBytes))
+                            {
+                                var result = session.PKCS7Verify(cms, inputStream,
+                                    new CkVendorX509Store(new[] { CACertificate }), VendorCrlMode.OptionalClrCheck, 0);
+
+                                if (result.IsValid)
+                                {
+                                    Console.WriteLine(" Signer certificate's data is:");
+                                    foreach (var certificate in result.Certificates)
+                                    {
+                                        Helpers.PrintByteArray(certificate);
+                                    }
+
+                                    Console.WriteLine("Verifying has been completed successfully");
+                                }
+                                else
+                                    throw new InvalidOperationException("Invalid signature");
+                            }
                         }
                         finally
                         {

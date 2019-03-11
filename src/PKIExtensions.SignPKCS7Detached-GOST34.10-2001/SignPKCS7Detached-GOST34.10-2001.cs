@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.HighLevelAPI;
 using RutokenPkcs11Interop;
@@ -95,6 +96,7 @@ namespace PKIExtensions.SignPKCS7Detached_GOST3410_2001
                             // Подпись данных
                             byte[] signature = session.PKCS7Sign(SampleData.PKCS7_SignDataBytes,
                                 certificates[0], privateKeys[0], null, SampleConstants.UseHardwareHash | SampleConstants.PKCS7_DetachedSignature);
+                            File.WriteAllBytes("signature.bin", signature);
 
                             // Для преобразования строки в массив байт
                             // можно воспользоваться следующим закомментированным примером

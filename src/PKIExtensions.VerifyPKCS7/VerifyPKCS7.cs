@@ -1,7 +1,10 @@
 ﻿using System;
+using System.IO;
 using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.HighLevelAPI;
 using RutokenPkcs11Interop;
+using RutokenPkcs11Interop.Common;
+using RutokenPkcs11Interop.HighLevelAPI;
 using RutokenPkcs11Interop.Samples.Common;
 
 namespace PKIExtensions.VerifyPKCS7
@@ -25,18 +28,18 @@ namespace PKIExtensions.VerifyPKCS7
     *                                                                        *
     * Для алгоритма ГОСТ Р 34.10-2001:                                       *
     * PKIExtensions.ImportCertificate-GOST34.10-2001 и                       *
-    * PKIExtensions.SignPKCS7-GOST34.10-2001.                                *
+    * PKIExtensions.SignPKCS7-GOST34.10-2001 (signature.bin).                *
     *                                                                        *
     * Для алгоритма ГОСТ Р 34.10-2012 с длиной закрытого ключа 256 бит:      *
     * PKIExtensions.ImportCertificate-GOST34.10-2012-256 и                   *
-    * PKIExtensions.SignPKCS7-GOST34.10-2012-256.                            *
+    * PKIExtensions.SignPKCS7-GOST34.10-2012-256 (signature.bin).            *
     *                                                                        *
     * Для алгоритма ГОСТ Р 34.10-2012 с длиной закрытого ключа 512 бит:      *
     * PKIExtensions.ImportCertificate-GOST34.10-2012-512 и                   *
-    * PKIExtensions.SignPKCS7-GOST34.10-2012-512.                            *
+    * PKIExtensions.SignPKCS7-GOST34.10-2012-512 (signature.bin).            *
     *                                                                        *
     * Также необходимо предоставить сертификат УЦ, в котором был выписан     *
-    * сертификат в кодировке base64 или DER.                                 *
+    * сертификат в кодировке DER.(положить в папку с exe-файлом CA_cert.cer) *
     *************************************************************************/
 
     class VerifyPKCS7
@@ -63,9 +66,32 @@ namespace PKIExtensions.VerifyPKCS7
 
                         try
                         {
+                            Console.WriteLine("Reading CA certificate...");
+                            var CACertificate = File.ReadAllBytes("CA_cert.cer");
+
+                            Console.WriteLine("Reading CMS...");
+                            var cms = File.ReadAllBytes("signature.bin");
+
                             // Проверка подписи
                             Console.WriteLine("Verifying...");
-                            // TODO: реализовать функцию в библиотеке и прикрутить сюда ее вызов
+                            var result = session.PKCS7Verify(cms,
+                                new CkVendorX509Store(new[] { CACertificate }), VendorCrlMode.OptionalClrCheck, 0);
+
+                            if (result.IsValid)
+                            {
+                                Console.WriteLine(" Signed data is:");
+                                Helpers.PrintByteArray(result.Data);
+
+                                Console.WriteLine(" Signer certificate's data is:");
+                                foreach (var certificate in result.Certificates)
+                                {
+                                    Helpers.PrintByteArray(certificate);
+                                }
+
+                                Console.WriteLine("Verifying has been completed successfully");
+                            }
+                            else
+                                throw new InvalidOperationException("Invalid signature");
                         }
                         finally
                         {
