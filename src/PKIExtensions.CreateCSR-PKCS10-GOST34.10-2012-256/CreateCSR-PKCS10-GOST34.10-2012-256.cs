@@ -120,7 +120,7 @@ namespace PKIExtensions.CreateCSR_PKCS10_GOST3410_2012_256
             {
                 // Инициализировать библиотеку
                 Console.WriteLine("Library initialization");
-                using (var pkcs11 = new Pkcs11(Settings.RutokenEcpDllDefaultPath, Settings.OsLockingDefault))
+                using (var pkcs11 = new Pkcs11(Settings.RutokenEcpDllDefaultPath, AppType.MultiThreaded))
                 {
                     // Получить доступный слот
                     Console.WriteLine("Checking tokens available");
@@ -137,7 +137,7 @@ namespace PKIExtensions.CreateCSR_PKCS10_GOST3410_2012_256
 
                     // Открыть RW сессию в первом доступном слоте
                     Console.WriteLine("Opening RW session");
-                    using (Session session = slot.OpenSession(false))
+                    using (Session session = slot.OpenSession(SessionType.ReadWrite))
                     {
                         // Выполнить аутентификацию Пользователя
                         Console.WriteLine("User authentication");

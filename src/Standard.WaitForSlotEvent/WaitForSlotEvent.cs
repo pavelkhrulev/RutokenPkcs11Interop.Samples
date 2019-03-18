@@ -33,10 +33,10 @@ namespace WaitForSlotEvent
                 // Ожидать событие в некотором слоте
                 bool eventOccured;
                 ulong slotId;
-                pkcs11.WaitForSlotEvent(false, out eventOccured, out slotId);
+                pkcs11.WaitForSlotEvent(WaitType.Blocking, out eventOccured, out slotId);
 
                 // Получить информацию о слоте
-                Slot slot = pkcs11.GetSlotList(false).Single(x => x.SlotId == slotId);
+                Slot slot = pkcs11.GetSlotList(SlotsType.WithOrWithoutTokenPresent).Single(x => x.SlotId == slotId);
                 SlotInfo slotInfo = slot.GetSlotInfo();
 
                 // Распечатать информацию о номере потока и событии в слоте
@@ -54,7 +54,7 @@ namespace WaitForSlotEvent
             {
                 // Инициализировать библиотеку
                 Console.WriteLine("Library initialization");
-                using (var pkcs11 = new Pkcs11(Settings.RutokenEcpDllDefaultPath, Settings.OsLockingDefault))
+                using (var pkcs11 = new Pkcs11(Settings.RutokenEcpDllDefaultPath, AppType.MultiThreaded))
                 {
                     Console.WriteLine("Please attach or detach Rutoken and press Enter...");
                     Console.ReadKey();
@@ -65,14 +65,14 @@ namespace WaitForSlotEvent
                         // (не блокируя поток, используем флаг CKF_DONT_BLOCK)
                         bool eventOccured;
                         ulong slotId;
-                        pkcs11.WaitForSlotEvent(true, out eventOccured, out slotId);
+                        pkcs11.WaitForSlotEvent(WaitType.NonBlocking, out eventOccured, out slotId);
                         if (!eventOccured)
                         {
                             break;
                         }
 
                         // Получить информацию о слоте
-                        Slot slot = pkcs11.GetSlotList(false).Single(x => x.SlotId == slotId);
+                        Slot slot = pkcs11.GetSlotList(SlotsType.WithOrWithoutTokenPresent).Single(x => x.SlotId == slotId);
                         SlotInfo slotInfo = slot.GetSlotInfo();
                         Console.WriteLine(" Slot ID: {0}", slotId);
                         Console.WriteLine(" Slot description: {0}", slotInfo.SlotDescription);
