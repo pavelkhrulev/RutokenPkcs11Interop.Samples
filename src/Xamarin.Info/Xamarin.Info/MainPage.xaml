@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Xamarin.Info.MainPage" x:Name="MainContentPage" Padding="10">
+    <StackLayout>
+        <Label Text="Welcome to Rutoken Info App!" 
+               HorizontalOptions="Center"
+               VerticalOptions="CenterAndExpand" LineBreakMode="WordWrap"/>
+        <ListView SeparatorVisibility="None"
+                  BindingContext="{x:Reference Name=MainContentPage}"
+                  ItemsSource="{Binding Features}" RowHeight="80">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <ContentView Padding="5">
+                            <Frame BorderColor="Accent"
+                                   Padding="10">
+                                <StackLayout Orientation="Horizontal">
+                                    <StackLayout>
+                                        <Label Text="{Binding Name}"
+                                               FontSize="22"
+                                               VerticalOptions="StartAndExpand" />
+                                        <Label Text="{Binding Description}"
+                                               FontSize="16"
+                                               VerticalOptions="CenterAndExpand" />
+                                    </StackLayout>
+                                </StackLayout>
+                            </Frame>
+                        </ContentView>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Button Text="GetInfo" Clicked="Button_OnClicked"/>
+    </StackLayout>
+
+</ContentPage>
