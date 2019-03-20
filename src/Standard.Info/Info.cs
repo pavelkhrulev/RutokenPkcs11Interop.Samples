@@ -34,7 +34,7 @@ namespace Info
             {
                 // Инициализировать библиотеку
                 Console.WriteLine("Library initialization");
-                using (var pkcs11 = new Pkcs11(Settings.RutokenEcpDllDefaultPath, Settings.OsLockingDefault))
+                using (var pkcs11 = new Pkcs11(Settings.RutokenEcpDllDefaultPath, AppType.MultiThreaded))
                 {
                     // Получить информацию о библиотеке
                     Console.WriteLine("Getting library info");
@@ -48,7 +48,7 @@ namespace Info
 
                     // Получить слоты
                     Console.WriteLine("Checking slots available");
-                    List<Slot> slots = pkcs11.GetSlotList(true);
+                    List<Slot> slots = pkcs11.GetSlotList(SlotsType.WithTokenPresent);
                     // Проверить, что слоты найдены
                     if (slots == null)
                         throw new NullReferenceException("No available slots");

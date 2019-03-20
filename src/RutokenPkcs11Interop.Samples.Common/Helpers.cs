@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.HighLevelAPI;
 
 namespace RutokenPkcs11Interop.Samples.Common
@@ -10,7 +11,7 @@ namespace RutokenPkcs11Interop.Samples.Common
         public static Slot GetUsableSlot(Pkcs11 pkcs11)
         {
             // Получить список слотов c подключенными токенами
-            List<Slot> slots = pkcs11.GetSlotList(true);
+            List<Slot> slots = pkcs11.GetSlotList(SlotsType.WithTokenPresent);
 
             // Проверить, что слоты найдены
             if (slots == null)
