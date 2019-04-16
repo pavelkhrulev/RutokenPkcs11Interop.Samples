@@ -37,7 +37,7 @@ namespace Extended.ManageFlash
             {
                 // Инициализировать библиотеку
                 Console.WriteLine("Library initialization");
-                using (var pkcs11 = new Pkcs11(Settings.RutokenEcpDllDefaultPath, Settings.OsLockingDefault))
+                using (var pkcs11 = new Pkcs11(Settings.RutokenEcpDllDefaultPath, AppType.MultiThreaded))
                 {
                     // Получить доступный слот
                     Console.WriteLine("Checking tokens available");

@@ -33,13 +33,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Pkcs11Interop, Version=3.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Pkcs11Interop.3.3.0\lib\net45\Pkcs11Interop.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Pkcs11Interop, Version=4.1.1.0, Culture=neutral, PublicKeyToken=c10e9c2d8c006d2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Pkcs11Interop.4.1.1\lib\net45\Pkcs11Interop.dll</HintPath>
     </Reference>
-    <Reference Include="RutokenPkcs11Interop, Version=1.3.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Aktiv.RutokenPkcs11Interop.1.3.1\lib\net45\RutokenPkcs11Interop.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="RutokenPkcs11Interop, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Aktiv.RutokenPkcs11Interop.2.0.0-alpha3\lib\net45\RutokenPkcs11Interop.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
